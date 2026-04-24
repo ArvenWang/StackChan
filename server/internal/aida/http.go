@@ -3,6 +3,7 @@ package aida
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -58,6 +59,20 @@ func (h *handler) handleHealth(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) handleTasks(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		limit := 10
+		if rawLimit := strings.TrimSpace(r.URL.Query().Get("limit")); rawLimit != "" {
+			parsedLimit, err := strconv.Atoi(rawLimit)
+			if err != nil || parsedLimit < 1 || parsedLimit > 100 {
+				writeJSON(w, http.StatusBadRequest, map[string]string{"error": "limit must be between 1 and 100"})
+				return
+			}
+			limit = parsedLimit
+		}
+		writeJSON(w, http.StatusOK, h.manager.ListTasks(limit))
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		writeJSON(w, http.StatusMethodNotAllowed, map[string]string{"error": "method not allowed"})
 		return

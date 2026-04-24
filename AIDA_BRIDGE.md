@@ -88,6 +88,7 @@ GET  /aida/health
 ## MCP Tools Added To AI.AGENT
 
 - `self.desktop.codex_run`
+- `self.desktop.codex_list`
 - `self.desktop.codex_status`
 - `self.desktop.codex_cancel`
 
@@ -120,6 +121,13 @@ Get task:
 ```bash
 curl -H 'Authorization: Bearer change-me' \
   http://127.0.0.1:7826/v1/tasks/<task-id>
+```
+
+List recent tasks:
+
+```bash
+curl -H 'Authorization: Bearer change-me' \
+  'http://127.0.0.1:7826/v1/tasks?limit=5'
 ```
 
 Cancel task:

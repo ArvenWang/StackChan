@@ -13,6 +13,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -109,6 +110,27 @@ func (m *Manager) GetTask(id string) (*Task, bool) {
 		return nil, false
 	}
 	return cloneTask(task), true
+}
+
+func (m *Manager) ListTasks(limit int) []*Task {
+	m.mu.RLock()
+	tasks := make([]*Task, 0, len(m.tasks))
+	for _, task := range m.tasks {
+		tasks = append(tasks, cloneTask(task))
+	}
+	m.mu.RUnlock()
+
+	sort.Slice(tasks, func(i, j int) bool {
+		if tasks[i].CreatedAt.Equal(tasks[j].CreatedAt) {
+			return tasks[i].ID > tasks[j].ID
+		}
+		return tasks[i].CreatedAt.After(tasks[j].CreatedAt)
+	})
+
+	if limit > 0 && len(tasks) > limit {
+		tasks = tasks[:limit]
+	}
+	return tasks
 }
 
 func (m *Manager) CancelTask(id string) error {

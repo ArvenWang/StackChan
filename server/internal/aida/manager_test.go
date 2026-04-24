@@ -48,6 +48,24 @@ func TestCancelTaskImmediatelyLeavesTaskCanceled(t *testing.T) {
 	t.Fatalf("task status = %s, want %s", current.Status, StatusCanceled)
 }
 
+func TestListTasksReturnsNewestFirstAndAppliesLimit(t *testing.T) {
+	t.Parallel()
+
+	now := time.Now()
+	manager := NewManager(Config{})
+	manager.tasks["task-1"] = &Task{ID: "task-1", Title: "older", CreatedAt: now.Add(-2 * time.Minute)}
+	manager.tasks["task-2"] = &Task{ID: "task-2", Title: "newer", CreatedAt: now.Add(-1 * time.Minute)}
+	manager.tasks["task-3"] = &Task{ID: "task-3", Title: "newest", CreatedAt: now}
+
+	tasks := manager.ListTasks(2)
+	if len(tasks) != 2 {
+		t.Fatalf("ListTasks(2) length = %d, want 2", len(tasks))
+	}
+	if tasks[0].ID != "task-3" || tasks[1].ID != "task-2" {
+		t.Fatalf("ListTasks(2) order = [%s %s], want [task-3 task-2]", tasks[0].ID, tasks[1].ID)
+	}
+}
+
 func writeFakeCodexBin(t *testing.T, scriptBody string) string {
 	t.Helper()
 

@@ -172,6 +172,16 @@ void Hal::xiaozhi_mcp_init()
         });
 
     mclog::tagInfo(_tag, "add desktop.codex_status tool");
+    mcp_server.AddTool("self.desktop.codex_list",
+                       "List recent Codex desktop tasks from the paired Mac bridge. Use this to check the newest task "
+                       "IDs and statuses before asking for details on one task.",
+                       PropertyList({Property("limit", kPropertyTypeInteger, 5, 1, 20)}),
+                       [](const PropertyList& properties) -> ReturnValue {
+                           auto limit = properties["limit"].value<int>();
+                           return aida::listCodexTasks(limit);
+                       });
+
+    mclog::tagInfo(_tag, "add desktop.codex_status tool");
     mcp_server.AddTool("self.desktop.codex_status",
                        "Get the latest status for a Codex desktop task by task_id.",
                        PropertyList({Property("task_id", kPropertyTypeString, std::string())}),

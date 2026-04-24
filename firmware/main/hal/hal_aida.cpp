@@ -302,6 +302,17 @@ std::string createCodexTask(std::string_view prompt, std::string_view workspace,
     return performBridgeRequest("POST", "/v1/tasks", createTaskPayload(prompt, workspace, title, notify));
 }
 
+std::string listCodexTasks(int limit)
+{
+    if (limit <= 0) {
+        limit = 5;
+    }
+    if (limit > 100) {
+        limit = 100;
+    }
+    return performBridgeRequest("GET", "/v1/tasks?limit=" + std::to_string(limit));
+}
+
 std::string getCodexTask(std::string_view taskId)
 {
     auto task = trim(std::string(taskId));
