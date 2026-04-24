@@ -45,7 +45,7 @@ static bool contains_word(const std::string& text, const std::unordered_set<std:
 AppAvatar::AppAvatar()
 {
     // 配置 App 名
-    setAppInfo().name = "AVATAR";
+    setAppInfo().name = "虚拟形象";
     // 配置 App 图标
     static auto icon  = assets::get_image("icon_sentinel.bin");
     setAppInfo().icon = (void*)&icon;

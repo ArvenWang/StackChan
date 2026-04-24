@@ -16,6 +16,8 @@ using namespace uitk;
 using namespace uitk::lvgl_cpp;
 using namespace mooncake;
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 struct ToastColor_t {
     uint32_t bg     = 0x000000;
     uint32_t border = 0x000000;
@@ -76,7 +78,7 @@ void Toast::init(lv_obj_t* parent)
     _toast->onClick().connect([&]() { close(); });
 
     _msg_label = std::make_unique<Label>(_toast->get());
-    _msg_label->setTextFont(&lv_font_montserrat_20);
+    _msg_label->setTextFont(&BUILTIN_TEXT_FONT);
     _msg_label->setText(config.msg);
     _msg_label->setWidth(264);
     _msg_label->setTextAlign(LV_TEXT_ALIGN_CENTER);

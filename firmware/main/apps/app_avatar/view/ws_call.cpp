@@ -15,6 +15,7 @@ using namespace smooth_ui_toolkit;
 using namespace view;
 
 LV_IMAGE_DECLARE(icon_phone);
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
 
 /**
  * @brief
@@ -33,7 +34,7 @@ public:
         setBgOpa(0);
 
         _label_caller = std::make_unique<Label>(get());
-        _label_caller->setTextFont(&lv_font_montserrat_24);
+        _label_caller->setTextFont(&BUILTIN_TEXT_FONT);
         _label_caller->setTextColor(lv_color_hex(0xFFFFFF));
         _label_caller->align(LV_ALIGN_CENTER, 0, -63);
         _label_caller->setText(caller);
@@ -57,10 +58,10 @@ public:
         _img_decline->setSrc(&icon_phone);
 
         _label_decline = std::make_unique<Label>(get());
-        _label_decline->setTextFont(&lv_font_montserrat_14);
+        _label_decline->setTextFont(&BUILTIN_TEXT_FONT);
         _label_decline->setTextColor(lv_color_hex(0xFFFFFF));
         _label_decline->align(LV_ALIGN_CENTER, -73, 77);
-        _label_decline->setText("Decline");
+        _label_decline->setText("拒接");
 
         _button_accept = std::make_unique<Button>(get());
         _button_accept->align(LV_ALIGN_CENTER, 73, 30);
@@ -80,10 +81,10 @@ public:
         _img_accept->setSrc(&icon_phone);
 
         _label_accept = std::make_unique<Label>(get());
-        _label_accept->setTextFont(&lv_font_montserrat_14);
+        _label_accept->setTextFont(&BUILTIN_TEXT_FONT);
         _label_accept->setTextColor(lv_color_hex(0xFFFFFF));
         _label_accept->align(LV_ALIGN_CENTER, 73, 77);
-        _label_accept->setText("Accept");
+        _label_accept->setText("接听");
     }
 
     void update()
@@ -130,13 +131,13 @@ public:
         setBgOpa(0);
 
         _label_caller = std::make_unique<Label>(get());
-        _label_caller->setTextFont(&lv_font_montserrat_16);
+        _label_caller->setTextFont(&BUILTIN_TEXT_FONT);
         _label_caller->setTextColor(lv_color_hex(0xFFFFFF));
         _label_caller->align(LV_ALIGN_LEFT_MID, 13, 85);
         _label_caller->setText(caller);
 
         _label_timer = std::make_unique<Label>(get());
-        _label_timer->setTextFont(&lv_font_montserrat_14);
+        _label_timer->setTextFont(&BUILTIN_TEXT_FONT);
         _label_timer->setTextColor(lv_color_hex(0x67CE67));
         _label_timer->align(LV_ALIGN_LEFT_MID, 13, 104);
 
@@ -152,9 +153,9 @@ public:
                 onEnd();
             }
         });
-        _button_end->label().setTextFont(&lv_font_montserrat_14);
+        _button_end->label().setTextFont(&BUILTIN_TEXT_FONT);
         _button_end->label().setTextColor(lv_color_hex(0xFFFFFF));
-        _button_end->label().setText("End");
+        _button_end->label().setText("挂断");
     }
 
     void reset()

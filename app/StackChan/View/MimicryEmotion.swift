@@ -215,7 +215,7 @@ struct MimicryEmotion: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .preferredColorScheme(.dark)
-        .navigationTitle("AVATAR")
+        .navigationTitle("表情")
         .navigationBarTitleDisplayMode(.inline)
     }
     // Compress phone screen image and send to StackChan

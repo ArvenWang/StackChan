@@ -16,6 +16,7 @@ using namespace smooth_ui_toolkit::lvgl_cpp;
 using namespace setup_workers;
 
 static std::string _tag = "Setup-System";
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
 
 struct TimezoneOption_t {
     std::string name;
@@ -23,15 +24,15 @@ struct TimezoneOption_t {
 };
 
 static const std::vector<TimezoneOption_t> _timezone_list = {
-    {"Baker Is. (UTC-12)", "BIT12"},  {"Midway Island (UTC-11)", "SST11"}, {"Honolulu (UTC-10)", "HST10"},
-    {"Alaska (UTC-9)", "AKST9"},      {"Los Angeles (UTC-8)", "PST8"},     {"Denver (UTC-7)", "MST7"},
-    {"Chicago (UTC-6)", "CST6"},      {"New York (UTC-5)", "EST5"},        {"Halifax (UTC-4)", "AST4"},
-    {"S.Paulo (UTC-3)", "BRT3"},      {"S.Georgia (UTC-2)", "GST2"},       {"Azores (UTC-1)", "AZOT1"},
-    {"London (UTC+0)", "GMT0"},       {"Berlin (UTC+1)", "CET-1"},         {"Cairo (UTC+2)", "EET-2"},
-    {"Moscow (UTC+3)", "MSK-3"},      {"Dubai (UTC+4)", "GST-4"},          {"Karachi (UTC+5)", "PKT-5"},
-    {"Dhaka (UTC+6)", "BST-6"},       {"Bangkok (UTC+7)", "ICT-7"},        {"Beijing (UTC+8)", "CST-8"},
-    {"Tokyo (UTC+9)", "JST-9"},       {"Sydney (UTC+10)", "AEST-10"},      {"Noumea (UTC+11)", "SBT-11"},
-    {"Auckland (UTC+12)", "NZST-12"}, {"Fiji (UTC+13)", "FJT-13"},         {"Line Islands (UTC+14)", "LINT-14"}};
+    {"贝克岛 (UTC-12)", "BIT12"},  {"中途岛 (UTC-11)", "SST11"}, {"檀香山 (UTC-10)", "HST10"},
+    {"阿拉斯加 (UTC-9)", "AKST9"}, {"洛杉矶 (UTC-8)", "PST8"},  {"丹佛 (UTC-7)", "MST7"},
+    {"芝加哥 (UTC-6)", "CST6"},   {"纽约 (UTC-5)", "EST5"},    {"哈利法克斯 (UTC-4)", "AST4"},
+    {"圣保罗 (UTC-3)", "BRT3"},   {"南乔治亚岛 (UTC-2)", "GST2"}, {"亚速尔群岛 (UTC-1)", "AZOT1"},
+    {"伦敦 (UTC+0)", "GMT0"},     {"柏林 (UTC+1)", "CET-1"},   {"开罗 (UTC+2)", "EET-2"},
+    {"莫斯科 (UTC+3)", "MSK-3"},  {"迪拜 (UTC+4)", "GST-4"},   {"卡拉奇 (UTC+5)", "PKT-5"},
+    {"达卡 (UTC+6)", "BST-6"},    {"曼谷 (UTC+7)", "ICT-7"},   {"北京 (UTC+8)", "CST-8"},
+    {"东京 (UTC+9)", "JST-9"},    {"悉尼 (UTC+10)", "AEST-10"}, {"努美阿 (UTC+11)", "SBT-11"},
+    {"奥克兰 (UTC+12)", "NZST-12"}, {"斐济 (UTC+13)", "FJT-13"}, {"莱恩群岛 (UTC+14)", "LINT-14"}};
 
 VolumeSetupWorker::VolumeSetupWorker()
 {
@@ -82,7 +83,7 @@ VolumeSetupWorker::VolumeSetupWorker()
     apply_button_common_style(*_btn_confirm);
     _btn_confirm->align(LV_ALIGN_CENTER, 0, 60);
     _btn_confirm->setSize(150, 50);
-    _btn_confirm->label().setText("Confirm");
+    _btn_confirm->label().setText("确定");
     _btn_confirm->onClick().connect([this]() { _is_done = true; });
 }
 
@@ -112,8 +113,8 @@ TimezoneWorker::TimezoneWorker()
     _panel->setRadius(0);
 
     _label = std::make_unique<uitk::lvgl_cpp::Label>(_panel->get());
-    _label->setText("Time Zone");
-    _label->setTextFont(&lv_font_montserrat_16);
+    _label->setText("时区");
+    _label->setTextFont(&BUILTIN_TEXT_FONT);
     _label->setTextColor(lv_color_hex(0x26206A));
     _label->align(LV_ALIGN_CENTER, 0, -100);
 
@@ -131,7 +132,7 @@ TimezoneWorker::TimezoneWorker()
     _roller->setSize(210, 188);
     _roller->setOptions(options.c_str());
     _roller->align(LV_ALIGN_CENTER, -40, 16);
-    _roller->setTextFont(&lv_font_montserrat_16);
+    _roller->setTextFont(&BUILTIN_TEXT_FONT);
     _roller->setTextColor(lv_color_hex(0x26206A));
     _roller->setBgColor(lv_color_hex(0xB8D3FD));
     _roller->setRadius(18);
@@ -158,8 +159,8 @@ TimezoneWorker::TimezoneWorker()
     }
 
     _btn_confirm = std::make_unique<uitk::lvgl_cpp::Button>(_panel->get());
-    _btn_confirm->label().setText("ok");
-    _btn_confirm->label().setTextFont(&lv_font_montserrat_24);
+    _btn_confirm->label().setText("确定");
+    _btn_confirm->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_confirm->setSize(60, 110);
     _btn_confirm->align(LV_ALIGN_CENTER, 115, 40);
     _btn_confirm->onClick().connect([&]() { _confirm_flag = true; });
@@ -182,7 +183,7 @@ void TimezoneWorker::update()
             const auto& selected_option = _timezone_list[selected_id];
             GetHAL().setTimezone(selected_option.tz_posix);
 
-            view::pop_a_toast("Timezone Set", view::ToastType::Success);
+            view::pop_a_toast("时区已设置", view::ToastType::Success);
             mclog::tagInfo(_tag, "timezone set to: {}", selected_option.name);
         }
 
@@ -202,14 +203,14 @@ FactoryResetWorker::FactoryResetWorker()
 
     // Title
     _label_title = std::make_unique<uitk::lvgl_cpp::Label>(_panel->get());
-    _label_title->setText("Factory Reset");
-    _label_title->setTextFont(&lv_font_montserrat_24);
+    _label_title->setText("恢复出厂");
+    _label_title->setTextFont(&BUILTIN_TEXT_FONT);
     _label_title->setTextColor(lv_color_hex(0x26206A));
     _label_title->align(LV_ALIGN_CENTER, 0, -80);
 
     // Info
     _label_info = std::make_unique<uitk::lvgl_cpp::Label>(_panel->get());
-    _label_info->setTextFont(&lv_font_montserrat_16);
+    _label_info->setTextFont(&BUILTIN_TEXT_FONT);
     _label_info->setTextColor(lv_color_hex(0x26206A));
     _label_info->align(LV_ALIGN_CENTER, 0, -20);
     _label_info->setTextAlign(LV_TEXT_ALIGN_CENTER);
@@ -220,8 +221,8 @@ FactoryResetWorker::FactoryResetWorker()
     apply_button_common_style(*_btn_cancel);
     _btn_cancel->align(LV_ALIGN_CENTER, -72, 60);
     _btn_cancel->setSize(112, 48);
-    _btn_cancel->label().setText("Cancel");
-    _btn_cancel->label().setTextFont(&lv_font_montserrat_20);
+    _btn_cancel->label().setText("取消");
+    _btn_cancel->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_cancel->onClick().connect([this]() { _cancel_flag = true; });
 
     // Confirm Button
@@ -229,8 +230,8 @@ FactoryResetWorker::FactoryResetWorker()
     apply_button_common_style(*_btn_confirm);
     _btn_confirm->align(LV_ALIGN_CENTER, 72, 60);
     _btn_confirm->setSize(112, 48);
-    _btn_confirm->label().setText("Confirm");
-    _btn_confirm->label().setTextFont(&lv_font_montserrat_20);
+    _btn_confirm->label().setText("确定");
+    _btn_confirm->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_confirm->onClick().connect([this]() { _confirm_flag = true; });
 
     update_ui();
@@ -258,7 +259,7 @@ void FactoryResetWorker::update()
             _btn_confirm.reset();
             _label_title.reset();
 
-            _label_info->setText("Factory Resetting...\nDo not turn off power.");
+            _label_info->setText("正在恢复出厂设置...\n请勿断电。");
             _label_info->align(LV_ALIGN_CENTER, 0, 0);
 
             GetHAL().lvglUnlock();
@@ -278,16 +279,16 @@ void FactoryResetWorker::update()
 void FactoryResetWorker::update_ui()
 {
     if (_confirm_count == 0) {
-        _label_info->setText("Reset all settings to factory default?\nThis cannot be undone.");
-        _btn_confirm->label().setText("Reset");
+        _label_info->setText("将全部设置恢复为出厂默认？\n此操作无法撤销。");
+        _btn_confirm->label().setText("重置");
         _btn_confirm->setBgColor(lv_color_hex(0xFFB8B8));
     } else if (_confirm_count == 1) {
-        _label_info->setText("Are you absolutely sure?\nAll user data will be lost!");
-        _btn_confirm->label().setText("Yes");
+        _label_info->setText("确认继续吗？\n所有用户数据都会丢失！");
+        _btn_confirm->label().setText("继续");
         _btn_confirm->setBgColor(lv_color_hex(0xFF8888));
     } else if (_confirm_count == 2) {
-        _label_info->setText("Last Warning!\nPress Confirm to erase everything.");
-        _btn_confirm->label().setText("Confirm");
+        _label_info->setText("最后警告！\n按“确定”将清除全部数据。");
+        _btn_confirm->label().setText("确定");
         _btn_confirm->setBgColor(lv_color_hex(0xFF4444));
     }
 }

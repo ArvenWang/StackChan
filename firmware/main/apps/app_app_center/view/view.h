@@ -16,6 +16,8 @@
 
 namespace view {
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 /**
  * @brief
  *
@@ -52,8 +54,8 @@ public:
         _title_panel->setScrollbarMode(LV_SCROLLBAR_MODE_ACTIVE);
 
         _title = std::make_unique<uitk::lvgl_cpp::Label>(*_title_panel);
-        _title->setText("App Center");
-        _title->setTextFont(&lv_font_montserrat_16);
+        _title->setText("应用中心");
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0xFFF8C7));
         _title->align(LV_ALIGN_CENTER, 0, 0);
 
@@ -67,7 +69,7 @@ public:
             btn->setBgColor(lv_color_hex(0xFFDF9A));
 
             btn->label().setText(app.name);
-            btn->label().setTextFont(&lv_font_montserrat_20);
+            btn->label().setTextFont(&BUILTIN_TEXT_FONT);
             btn->label().setTextColor(lv_color_hex(0x47330A));
             btn->label().setLongMode(LV_LABEL_LONG_SCROLL_CIRCULAR);
             btn->label().setWidth(220);
@@ -125,7 +127,7 @@ public:
 
         _title = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
         _title->setText(app_info.name);
-        _title->setTextFont(&lv_font_montserrat_20);
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x47330A));
         _title->setTextAlign(LV_TEXT_ALIGN_CENTER);
         _title->setLongMode(LV_LABEL_LONG_SCROLL_CIRCULAR);
@@ -134,7 +136,7 @@ public:
 
         _desc_label = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
         _desc_label->setText(app_info.description);
-        _desc_label->setTextFont(&lv_font_montserrat_20);
+        _desc_label->setTextFont(&BUILTIN_TEXT_FONT);
         _desc_label->setTextColor(lv_color_hex(0x47330A));
         _desc_label->setTextAlign(LV_TEXT_ALIGN_LEFT);
         _desc_label->setWidth(260);
@@ -155,8 +157,8 @@ public:
         _btn_back->setBgColor(lv_color_hex(0xFFDF9A));
         _btn_back->setBorderWidth(0);
         _btn_back->setShadowWidth(0);
-        _btn_back->label().setText("Back");
-        _btn_back->label().setTextFont(&lv_font_montserrat_20);
+        _btn_back->label().setText("返回");
+        _btn_back->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_back->label().setTextColor(lv_color_hex(0x47330A));
         _btn_back->onClick().connect([this]() { _is_back = true; });
 
@@ -166,8 +168,8 @@ public:
         _btn_launch->setBgColor(lv_color_hex(0xFFAC6D));
         _btn_launch->setBorderWidth(0);
         _btn_launch->setShadowWidth(0);
-        _btn_launch->label().setText("Launch");
-        _btn_launch->label().setTextFont(&lv_font_montserrat_20);
+        _btn_launch->label().setText("启动");
+        _btn_launch->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_launch->label().setTextColor(lv_color_hex(0x47330A));
         _btn_launch->onClick().connect([this]() { _is_launch = true; });
     }
@@ -226,7 +228,7 @@ public:
 
         _title = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
         _title->setText(app_info.name);
-        _title->setTextFont(&lv_font_montserrat_20);
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x47330A));
         _title->setTextAlign(LV_TEXT_ALIGN_CENTER);
         _title->align(LV_ALIGN_TOP_MID, 0, 15);
@@ -235,8 +237,8 @@ public:
         _title->setHeight(28);
 
         _tips = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
-        _tips->setText("Downloading...");
-        _tips->setTextFont(&lv_font_montserrat_16);
+        _tips->setText("下载中...");
+        _tips->setTextFont(&BUILTIN_TEXT_FONT);
         _tips->setTextColor(lv_color_hex(0xA36135));
         _tips->setTextAlign(LV_TEXT_ALIGN_CENTER);
         _tips->setLongMode(LV_LABEL_LONG_SCROLL_CIRCULAR);
@@ -254,7 +256,7 @@ public:
         _progress_bar->setValue(0);
 
         _progress = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
-        _progress->setTextFont(&lv_font_montserrat_24);
+        _progress->setTextFont(&BUILTIN_TEXT_FONT);
         _progress->setTextColor(lv_color_hex(0x47330A));
         _progress->align(LV_ALIGN_CENTER, 0, 23);
         _progress->setText("");

@@ -18,7 +18,7 @@ using namespace setup_workers;
 AppSetup::AppSetup()
 {
     // 配置 App 名
-    setAppInfo().name = "SETUP";
+    setAppInfo().name = "设置";
     // 配置 App 图标
     static auto icon  = assets::get_image("icon_setup.bin");
     setAppInfo().icon = (void*)&icon;
@@ -45,7 +45,7 @@ void AppSetup::onOpen()
     _menu_sections = {
         {
             "Wi-Fi",
-            {{"Change Wi-Fi",
+            {{"更换 Wi-Fi",
               [&]() {
                   _destroy_menu    = true;
                   _need_warm_reset = true;
@@ -53,39 +53,39 @@ void AppSetup::onOpen()
               }}},
         },
         {
-            "Device",
-            {{"Brightness",
+            "设备",
+            {{"亮度",
               [&]() {
                   _destroy_menu = true;
                   _worker       = std::make_unique<BrightnessSetupWorker>();
               }},
-             {"Volume",
+             {"音量",
               [&]() {
                   _destroy_menu = true;
                   _worker       = std::make_unique<VolumeSetupWorker>();
               }},
-             {"Timezone",
+             {"时区",
               [&]() {
                   _destroy_menu = true;
                   _worker       = std::make_unique<TimezoneWorker>();
               }}},
         },
         {
-            "Hardware Test",
-            {{"Servo",
+            "硬件测试",
+            {{"舵机校准",
               [&]() {
                   _destroy_menu = true;
                   _worker       = std::make_unique<ZeroCalibrationWorker>();
               }},
-             {"RGB Strip",
+             {"RGB 灯带",
               [&]() {
                   _destroy_menu = true;
                   _worker       = std::make_unique<RgbTestWorker>();
               }}},
         },
         {
-            "Account",
-            {{"Unbind & Reset",
+            "账号",
+            {{"解绑并重置",
               [&]() {
                   _destroy_menu    = true;
                   _need_warm_reset = true;
@@ -93,9 +93,9 @@ void AppSetup::onOpen()
               }}},
         },
         {
-            "Firmware",
+            "固件",
             {
-                {fmt::format("Version:  {}", common::FirmwareVersion),
+                {fmt::format("版本：{}", common::FirmwareVersion),
                  [&]() {
                      _magic_count++;
                      if (_magic_count >= 10) {
@@ -104,7 +104,7 @@ void AppSetup::onOpen()
                          _worker       = std::make_unique<FwVersionWorker>();
                      }
                  }},
-                {"Check for Updates",
+                {"检查更新",
                  [&]() {
                      _destroy_menu    = true;
                      _need_warm_reset = true;

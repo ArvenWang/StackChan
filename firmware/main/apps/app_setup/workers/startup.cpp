@@ -13,6 +13,7 @@ using namespace smooth_ui_toolkit::lvgl_cpp;
 using namespace setup_workers;
 
 static std::string _tag = "Setup-Startup";
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
 
 StartupWorker::PageStartup::PageStartup()
 {
@@ -28,8 +29,8 @@ StartupWorker::PageStartup::PageStartup()
     _btn_skip->align(LV_ALIGN_CENTER, -72, 67);
     _btn_skip->setSize(112, 48);
     _btn_skip->setBgColor(lv_color_hex(0xD4D9E0));
-    _btn_skip->label().setText("Skip");
-    _btn_skip->label().setTextFont(&lv_font_montserrat_20);
+    _btn_skip->label().setText("跳过");
+    _btn_skip->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_skip->label().setTextColor(lv_color_hex(0x525064));
     _btn_skip->onClick().connect([this]() { _is_skip_clicked = true; });
 
@@ -37,16 +38,16 @@ StartupWorker::PageStartup::PageStartup()
     apply_button_common_style(*_btn_start);
     _btn_start->align(LV_ALIGN_CENTER, 72, 67);
     _btn_start->setSize(112, 48);
-    _btn_start->label().setText("Start");
-    _btn_start->label().setTextFont(&lv_font_montserrat_20);
+    _btn_start->label().setText("开始");
+    _btn_start->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_start->onClick().connect([this]() { _is_start_clicked = true; });
 
     _info = std::make_unique<Label>(lv_screen_active());
-    _info->setTextFont(&lv_font_montserrat_24);
+    _info->setTextFont(&BUILTIN_TEXT_FONT);
     _info->setTextColor(lv_color_hex(0x26206A));
     _info->align(LV_ALIGN_CENTER, 0, -30);
     _info->setTextAlign(LV_TEXT_ALIGN_CENTER);
-    _info->setText("Welcome!\nLet's get started.");
+    _info->setText("欢迎！\n开始设置吧。");
 }
 
 StartupWorker::StartupWorker()

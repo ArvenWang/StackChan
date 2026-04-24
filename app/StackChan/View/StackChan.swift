@@ -20,12 +20,12 @@ struct StackChan : View {
     
     func getDeviceStatus() -> String {
         if appState.deviceMac == "" {
-            return "Unbound device"
+            return "设备未绑定"
         } else {
             if appState.deviceIsOnline {
-                return "Device Online"
+                return "设备在线"
             } else {
-                return "Device Offline"
+                return "设备离线"
             }
         }
     }
@@ -60,7 +60,7 @@ struct StackChan : View {
                                 Image(systemName: "face.smiling")
                                     .font(.system(size: 44))
                                 Spacer()
-                                Text("AVATAR")
+                                Text("表情")
                                     .font(.largeTitle)
                             }
                             .padding(.horizontal,20)
@@ -84,7 +84,7 @@ struct StackChan : View {
                                 Image(systemName: "video")
                                     .font(.system(size: 44))
                                 Spacer()
-                                Text("SENTINEL")
+                                Text("看护")
                                     .font(.largeTitle)
                             }
                             .padding(.horizontal,20)
@@ -110,7 +110,7 @@ struct StackChan : View {
                                 )
                                 .font(.system(size: 44))
                                 Spacer()
-                                Text("MOTION")
+                                Text("动作")
                                     .font(.largeTitle)
                             }
                             .padding(.horizontal,20)
@@ -134,7 +134,7 @@ struct StackChan : View {
                                 Image(systemName: "figure.dance")
                                     .font(.system(size: 44))
                                 Spacer()
-                                Text("DANCE")
+                                Text("舞蹈")
                                     .font(.largeTitle)
                             }
                             .padding(.horizontal,20)
@@ -161,7 +161,7 @@ struct StackChan : View {
                     .presentationDetents([.medium])
                     .presentationBackgroundClear()
             }
-            .navigationTitle("StackChan")
+            .navigationTitle("我的机器人")
             .navigationDestination(for: PageType.self) { PageType in
                 switch PageType {
                 case .cameraPage:
@@ -364,5 +364,4 @@ struct StackChanSwitchFacePreview : PreviewProvider {
         SwitchFace()
     }
 }
-
 

@@ -14,6 +14,7 @@
 #include <application.h>
 #include <board.h>
 #include <display.h>
+#include <hal/hal_aida.h>
 #include <mutex>
 #include <assets.h>
 
@@ -109,6 +110,7 @@ void start_xiaozhi_app()
     // Initialize and run the application
     auto& app = Application::GetInstance();
     app.Initialize();
+    aida::startNotifyServer();
     app.Run();  // This function runs the main event loop and never returns
 }
 

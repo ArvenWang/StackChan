@@ -17,7 +17,7 @@ using namespace smooth_ui_toolkit::lvgl_cpp;
 AppAppCenter::AppAppCenter()
 {
     // 配置 App 名
-    setAppInfo().name = "APP.CENTER";
+    setAppInfo().name = "应用中心";
     // 配置 App 图标
     static auto icon  = assets::get_image("icon_app_center.bin");
     setAppInfo().icon = (void*)&icon;
@@ -51,7 +51,7 @@ void AppAppCenter::onOpen()
     // Fetch app list
     {
         LvglLockGuard lock;
-        loading_page->setMessage("Fetching app list...");
+        loading_page->setMessage("正在获取应用列表...");
     }
     _app_list = GetHAL().fetchAppList();
 

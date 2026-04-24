@@ -60,7 +60,7 @@ BrightnessSetupWorker::BrightnessSetupWorker()
     apply_button_common_style(*_btn_confirm);
     _btn_confirm->align(LV_ALIGN_CENTER, 0, 60);
     _btn_confirm->setSize(150, 50);
-    _btn_confirm->label().setText("Confirm");
+    _btn_confirm->label().setText("确定");
     _btn_confirm->onClick().connect([this]() { _is_done = true; });
 }
 

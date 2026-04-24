@@ -24,7 +24,7 @@ using namespace stackchan;
 AppEspnowControl::AppEspnowControl()
 {
     // 配置 App 名
-    setAppInfo().name = "ESPNOW.REMOTE";
+    setAppInfo().name = "遥控器";
     // 配置 App 图标
     static auto icon  = assets::get_image("icon_controller.bin");
     setAppInfo().icon = (void*)&icon;
@@ -120,8 +120,8 @@ bool AppEspnowControl::start_startup_page()
 void AppEspnowControl::start_advanced_page()
 {
     // Get role
-    std::vector<std::string> role_options = {"Receiver", "Sender"};
-    int role_selection                    = view::create_page_selector_and_wait("Select Role", role_options);
+    std::vector<std::string> role_options = {"接收端", "发送端"};
+    int role_selection                    = view::create_page_selector_and_wait("选择角色", role_options);
     _is_receiver                          = (role_selection == 0);
     mclog::tagInfo(getAppInfo().name, "selected role: {}", _is_receiver ? "Receiver" : "Sender");
 
@@ -130,7 +130,7 @@ void AppEspnowControl::start_advanced_page()
     for (int i = 0; i < 13; i++) {
         channel_options.push_back(std::to_string(i + 1));
     }
-    _wifi_channel = view::create_page_selector_and_wait("Select WiFi Channel", channel_options) + 1;
+    _wifi_channel = view::create_page_selector_and_wait("选择 Wi-Fi 信道", channel_options) + 1;
     mclog::tagInfo(getAppInfo().name, "selected wifi channel: {}", _wifi_channel);
 
     // Get id
@@ -139,18 +139,18 @@ void AppEspnowControl::start_advanced_page()
         for (int i = 1; i < 255; i++) {
             id_options.push_back(std::to_string(i));
         }
-        _receiver_id = view::create_page_selector_and_wait("Select Receiver ID", id_options) + 1;
+        _receiver_id = view::create_page_selector_and_wait("选择接收端 ID", id_options) + 1;
         mclog::tagInfo(getAppInfo().name, "selected receiver id: {}", _receiver_id);
     } else {
         std::vector<std::string> id_options;
         for (int i = 0; i < 255; i++) {
             if (i == 0) {
-                id_options.push_back("0 (Broadcast)");
+                id_options.push_back("0（广播）");
                 continue;
             }
             id_options.push_back(std::to_string(i));
         }
-        _receiver_id = view::create_page_selector_and_wait("Select Receiver ID", id_options);
+        _receiver_id = view::create_page_selector_and_wait("选择目标 ID", id_options);
         mclog::tagInfo(getAppInfo().name, "selected target id: {}", _receiver_id);
     }
 }

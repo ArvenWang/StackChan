@@ -65,11 +65,11 @@ struct Moments : View {
                             self.showAddMoment = true
                         }
                     } label: {
-                        Label("Add", systemImage: "plus")
+                        Label("发布", systemImage: "plus")
                     }
                 }
             }
-            .navigationTitle("Moments")
+            .navigationTitle("动态")
             .sheet(isPresented: $showAddMoment) {
                 AddMoment(showAddMoment:$showAddMoment) { post in
                     // Add a new post
@@ -77,33 +77,33 @@ struct Moments : View {
                 }
                 .interactiveDismissDisabled(true)
             }
-            .alert("Add PostComment", isPresented: $showAddPostComment) {
-                TextField("Enter your comment", text: Binding(
+            .alert("添加评论", isPresented: $showAddPostComment) {
+                TextField("请输入评论内容", text: Binding(
                     get: { editPostCommentContent ?? "" },
                     set: { editPostCommentContent = $0 }
                 ))
                 Button(role: .cancel) {
                     showAddPostComment = false
                 } label: {
-                    Text("Cancel")
+                    Text("取消")
                 }
                 if #available(iOS 26.0, *) {
                     Button(role: .confirm) {
                         showAddPostComment = false
                         addPostComment()
                     } label: {
-                        Text("Confirm")
+                        Text("确定")
                     }
                 } else {
                     Button {
                         showAddPostComment = false
                         addPostComment()
                     } label: {
-                        Text("Confirm")
+                        Text("确定")
                     }
                 }
             } message: {
-                Text("Please enter your comment below.")
+                Text("请输入评论内容。")
             }
             .onAppear {
                 page = 1
@@ -120,7 +120,7 @@ struct Moments : View {
                     .resizable()
                     .frame(width: 25, height: 25)
                     .clipShape(Circle())
-                Text(post.name ?? "StackChanUser")
+                Text(post.name ?? "StackChan 用户")
                     .font(.system(size: 25))
                 Spacer()
                 if post.mac == appState.deviceMac {
@@ -195,7 +195,7 @@ struct Moments : View {
                 ForEach(comments, id: \.id) { comment in
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            Text((comment.name ?? "User") + ": ")
+                            Text((comment.name ?? "用户") + ": ")
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.accentColor)
@@ -384,8 +384,8 @@ struct AddMoment : View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Text") {
-                    TextField("Please enter the post content", text: Binding(
+                Section("文字") {
+                    TextField("请输入动态内容", text: Binding(
                         get: {
                             post.contentText ?? ""
                         },
@@ -395,10 +395,10 @@ struct AddMoment : View {
                     ), axis: .vertical)
                     .textFieldStyle(.plain)
                 }
-                Section("image") {
+                Section("图片") {
                     PhotosPicker(selection: $photoItem, matching: .images) {
                         if isUploading {
-                            ProgressView("Uploading...")
+                            ProgressView("上传中...")
                         } else {
                             HStack {
                                 Spacer()
@@ -422,7 +422,7 @@ struct AddMoment : View {
                                         }
                                     }
                                 } else {
-                                    Label("Select Image", systemImage: "plus.circle")
+                                    Label("选择图片", systemImage: "plus.circle")
                                 }
                                 Spacer()
                             }
@@ -433,13 +433,13 @@ struct AddMoment : View {
                     }
                 }
             }
-            .navigationTitle("Add Post")
+            .navigationTitle("发布动态")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         self.showAddMoment = false
                     } label: {
-                        Label("Cancel", systemImage: "xmark")
+                        Label("取消", systemImage: "xmark")
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
@@ -447,7 +447,7 @@ struct AddMoment : View {
                         callBack?(post)
                         self.showAddMoment = false
                     } label: {
-                        Label("Confirm", systemImage: "checkmark")
+                        Label("确定", systemImage: "checkmark")
                     }
                 }
             }

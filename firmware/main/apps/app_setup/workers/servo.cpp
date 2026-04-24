@@ -15,6 +15,7 @@ using namespace smooth_ui_toolkit::lvgl_cpp;
 using namespace setup_workers;
 
 static std::string _tag = "Setup-Servo";
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
 
 /**
  * @brief
@@ -32,10 +33,10 @@ public:
         _panel->setRadius(0);
 
         _title = std::make_unique<Label>(lv_screen_active());
-        _title->setTextFont(&lv_font_montserrat_20);
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x7E7B9C));
         _title->align(LV_ALIGN_TOP_MID, 0, 13);
-        _title->setText("HOME POSITION:");
+        _title->setText("归中校准");
 
         _img                            = std::make_unique<Image>(lv_screen_active());
         _img_setup_stackchan_front_view = assets::get_image("setup_stackchan_front_view.bin");
@@ -46,16 +47,16 @@ public:
         apply_button_common_style(*_btn_next);
         _btn_next->align(LV_ALIGN_CENTER, 79, 73);
         _btn_next->setSize(120, 48);
-        _btn_next->label().setText("Continue");
-        _btn_next->label().setTextFont(&lv_font_montserrat_20);
+        _btn_next->label().setText("继续");
+        _btn_next->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_next->onClick().connect([this]() { _is_done = true; });
 
         _info = std::make_unique<Label>(lv_screen_active());
-        _info->setTextFont(&lv_font_montserrat_20);
+        _info->setTextFont(&BUILTIN_TEXT_FONT);
         _info->setTextColor(lv_color_hex(0x26206A));
         _info->align(LV_ALIGN_TOP_LEFT, 185, 56);
         _info->setTextAlign(LV_TEXT_ALIGN_LEFT);
-        _info->setText("StackChan\nlooking\nstraight\nforward.");
+        _info->setText("让 StackChan\n正视前方。");
     }
 
 private:
@@ -89,14 +90,14 @@ public:
         _btn_go_home = std::make_unique<Button>(*_panel);
         apply_button_common_style(*_btn_go_home);
         _btn_go_home->setSize(290, 70);
-        _btn_go_home->label().setText("Move To Home");
+        _btn_go_home->label().setText("回到归中");
         _btn_go_home->onClick().connect([this]() { _go_home_flag = true; });
 
         _btn_confirm = std::make_unique<Button>(*_panel);
         apply_button_common_style(*_btn_confirm);
         _btn_confirm->setSize(290, 80);
         _btn_confirm->setBgColor(lv_color_hex(0xFFDF9A));
-        _btn_confirm->label().setText("Set Current Position\nAs Home");
+        _btn_confirm->label().setText("将当前位置设为\n归中位置");
         _btn_confirm->label().setTextAlign(LV_TEXT_ALIGN_CENTER);
         _btn_confirm->label().setTextColor(lv_color_hex(0x47330A));
         _btn_confirm->onClick().connect([this]() { _confirm_flag = true; });
@@ -105,7 +106,7 @@ public:
         apply_button_common_style(*_btn_reset_default);
         _btn_reset_default->setSize(290, 80);
         _btn_reset_default->setBgColor(lv_color_hex(0xBAE4BA));
-        _btn_reset_default->label().setText("Reset To Default\nHome Position");
+        _btn_reset_default->label().setText("恢复默认\n归中位置");
         _btn_reset_default->label().setTextAlign(LV_TEXT_ALIGN_CENTER);
         _btn_reset_default->label().setTextColor(lv_color_hex(0x233B23));
         _btn_reset_default->onClick().connect([this]() { _reset_default_flag = true; });
@@ -113,7 +114,7 @@ public:
         _btn_quit = std::make_unique<Button>(*_panel);
         apply_button_common_style(*_btn_quit);
         _btn_quit->setSize(230, 55);
-        _btn_quit->label().setText("Done");
+        _btn_quit->label().setText("完成");
         _btn_quit->onClick().connect([this]() { _is_done = true; });
 
         auto& motion = GetStackChan().motion();
@@ -131,13 +132,13 @@ public:
             motion.yawServo().setCurrentAngleAsZero();
             motion.pitchServo().setCurrentAngleAsZero();
 
-            view::pop_a_toast("Home position set", view::ToastType::Success);
+            view::pop_a_toast("已设置归中位置", view::ToastType::Success);
         }
 
         if (_go_home_flag) {
             _go_home_flag = false;
 
-            view::pop_a_toast("Moving to home", view::ToastType::Warning);
+            view::pop_a_toast("正在回到归中", view::ToastType::Warning);
             mclog::tagInfo(_tag, "go home");
 
             auto& motion = GetStackChan().motion();
@@ -153,7 +154,7 @@ public:
             motion.yawServo().resetZeroCalibration();
             motion.pitchServo().resetZeroCalibration();
 
-            view::pop_a_toast("Home position reset", view::ToastType::Success);
+            view::pop_a_toast("已恢复默认归中位置", view::ToastType::Success);
         }
     }
 
@@ -205,27 +206,26 @@ public:
         _panel->setRadius(0);
 
         _title = std::make_unique<Label>(lv_screen_active());
-        _title->setTextFont(&lv_font_montserrat_20);
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x7E7B9C));
         _title->align(LV_ALIGN_TOP_MID, 0, 13);
-        _title->setText("SERVO TEST");
+        _title->setText("舵机测试");
 
         _info = std::make_unique<Label>(lv_screen_active());
         _info->setWidth(280);
-        _info->setTextFont(&lv_font_montserrat_16);
+        _info->setTextFont(&BUILTIN_TEXT_FONT);
         _info->setTextColor(lv_color_hex(0x26206A));
         _info->align(LV_ALIGN_CENTER, 0, -18);
         _info->setTextAlign(LV_TEXT_ALIGN_CENTER);
-        _info->setText(
-            "Put me on a flat stable surface\nand remove your hands.\n\nPower me via the bottom USB-C \nif needed. ");
+        _info->setText("请把我放在平稳桌面上，\n并移开双手。\n\n如有需要，\n请从底部 USB-C 供电。");
 
         _btn_skip = std::make_unique<Button>(lv_screen_active());
         apply_button_common_style(*_btn_skip);
         _btn_skip->align(LV_ALIGN_CENTER, -72, 72);
         _btn_skip->setSize(112, 48);
         _btn_skip->setBgColor(lv_color_hex(0xD4D9E0));
-        _btn_skip->label().setText("Skip");
-        _btn_skip->label().setTextFont(&lv_font_montserrat_20);
+        _btn_skip->label().setText("跳过");
+        _btn_skip->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_skip->label().setTextColor(lv_color_hex(0x525064));
         _btn_skip->onClick().connect([this]() { _is_skip_clicked = true; });
 
@@ -233,8 +233,8 @@ public:
         apply_button_common_style(*_btn_start);
         _btn_start->align(LV_ALIGN_CENTER, 72, 72);
         _btn_start->setSize(112, 48);
-        _btn_start->label().setText("Start");
-        _btn_start->label().setTextFont(&lv_font_montserrat_20);
+        _btn_start->label().setText("开始");
+        _btn_start->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_start->onClick().connect([this]() { _is_start_clicked = true; });
     }
 
@@ -270,18 +270,18 @@ public:
         _panel->setRadius(0);
 
         _title = std::make_unique<Label>(lv_screen_active());
-        _title->setTextFont(&lv_font_montserrat_20);
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x7E7B9C));
         _title->align(LV_ALIGN_TOP_MID, 0, 13);
-        _title->setText("SERVO TEST");
+        _title->setText("舵机测试");
 
         _info = std::make_unique<Label>(lv_screen_active());
         _info->setWidth(280);
-        _info->setTextFont(&lv_font_montserrat_20);
+        _info->setTextFont(&BUILTIN_TEXT_FONT);
         _info->setTextColor(lv_color_hex(0x26206A));
         _info->align(LV_ALIGN_CENTER, 0, -12);
         _info->setTextAlign(LV_TEXT_ALIGN_CENTER);
-        _info->setText("Preparing...");
+        _info->setText("准备中...");
 
         auto& motion = GetStackChan().motion();
         motion.setAutoAngleSyncEnabled(true);
@@ -327,19 +327,19 @@ private:
             case Step::GoHome2:
             case Step::GoHome3:
             case Step::GoHome4:
-                _info->setText("Returning to\nthe home position...");
+                _info->setText("正在回到\n归中位置...");
                 motion.goHome(_move_speed);
                 break;
             case Step::Left90:
-                _info->setText("Moving left...");
+                _info->setText("正在向左移动...");
                 motion.moveWithSpeed(900, 0, _move_speed);
                 break;
             case Step::Right90:
-                _info->setText("Moving right...");
+                _info->setText("正在向右移动...");
                 motion.moveWithSpeed(-900, 0, _move_speed);
                 break;
             case Step::Up90:
-                _info->setText("Moving up...");
+                _info->setText("正在向上移动...");
                 motion.moveWithSpeed(0, 900, _move_speed);
                 break;
         }
@@ -370,26 +370,26 @@ public:
         _panel->setRadius(0);
 
         _title = std::make_unique<Label>(lv_screen_active());
-        _title->setTextFont(&lv_font_montserrat_20);
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x7E7B9C));
         _title->align(LV_ALIGN_TOP_MID, 0, 13);
-        _title->setText("SERVO TEST");
+        _title->setText("舵机测试");
 
         _info = std::make_unique<Label>(lv_screen_active());
         _info->setWidth(280);
-        _info->setTextFont(&lv_font_montserrat_20);
+        _info->setTextFont(&BUILTIN_TEXT_FONT);
         _info->setTextColor(lv_color_hex(0x26206A));
         _info->align(LV_ALIGN_CENTER, 0, -16);
         _info->setTextAlign(LV_TEXT_ALIGN_CENTER);
-        _info->setText("Servo test completed.\n");
+        _info->setText("舵机测试完成。");
 
         _btn_retest = std::make_unique<Button>(lv_screen_active());
         apply_button_common_style(*_btn_retest);
         _btn_retest->align(LV_ALIGN_CENTER, -72, 67);
         _btn_retest->setSize(112, 48);
         _btn_retest->setBgColor(lv_color_hex(0xD4D9E0));
-        _btn_retest->label().setText("Retest");
-        _btn_retest->label().setTextFont(&lv_font_montserrat_20);
+        _btn_retest->label().setText("再测一次");
+        _btn_retest->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_retest->label().setTextColor(lv_color_hex(0x525064));
         _btn_retest->onClick().connect([this]() { _is_retest_clicked = true; });
 
@@ -397,8 +397,8 @@ public:
         apply_button_common_style(*_btn_next);
         _btn_next->align(LV_ALIGN_CENTER, 72, 67);
         _btn_next->setSize(112, 48);
-        _btn_next->label().setText("Next");
-        _btn_next->label().setTextFont(&lv_font_montserrat_20);
+        _btn_next->label().setText("下一步");
+        _btn_next->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_next->onClick().connect([this]() { _is_next_clicked = true; });
     }
 
@@ -463,10 +463,14 @@ struct RgbColorEntry {
     uint8_t b;
 };
 
-static const std::vector<RgbColorEntry> _rgb_colors = {
-    {"Red", 255, 0, 0},    {"Green", 0, 255, 0},     {"Blue", 0, 0, 255},      {"Yellow", 255, 255, 0},
-    {"Cyan", 0, 255, 255}, {"Magenta", 255, 0, 255}, {"White", 255, 255, 255}, {"Off", 0, 0, 0},
-};
+static const std::vector<RgbColorEntry> _rgb_colors = {{"红色", 255, 0, 0},
+                                                       {"绿色", 0, 255, 0},
+                                                       {"蓝色", 0, 0, 255},
+                                                       {"黄色", 255, 255, 0},
+                                                       {"青色", 0, 255, 255},
+                                                       {"洋红", 255, 0, 255},
+                                                       {"白色", 255, 255, 255},
+                                                       {"关闭", 0, 0, 0}};
 
 RgbTestWorker::RgbTestWorker()
 {
@@ -501,7 +505,7 @@ RgbTestWorker::RgbTestWorker()
     auto btn_quit = std::make_unique<Button>(*_panel);
     apply_button_common_style(*btn_quit);
     btn_quit->setSize(200, 50);
-    btn_quit->label().setText("Back");
+    btn_quit->label().setText("返回");
     btn_quit->onClick().connect([this]() { _is_done = true; });
     _buttons.push_back(std::move(btn_quit));
 }

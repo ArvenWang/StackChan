@@ -135,14 +135,14 @@ struct CameraPage: View {
                     updateControlSize(isPortrait: isPortrait, size: newValue)
                 }
                 .toolbar(.hidden, for: .tabBar)
-                .navigationTitle("SENTINEL")
+                .navigationTitle("看护")
             }
         }
         .alert(alertMessage, isPresented: $showAlert) {
             Button {
                 
             } label: {
-                Text("Confirm")
+                Text("确定")
             }
         }
         .onAppear {
@@ -509,7 +509,7 @@ struct CameraPage: View {
                 Spacer()
                 HStack {
                     VStack {
-                        Text("View\nPresets").font(.caption).multilineTextAlignment(.center)
+                        Text("视角\n预设").font(.caption).multilineTextAlignment(.center)
                         cameraRecordPoint()
                     }
                     Spacer()
@@ -533,7 +533,7 @@ struct CameraPage: View {
             HStack {
                 HStack {
                     VStack {
-                        Text("View\nPresets").font(.caption).multilineTextAlignment(.center)
+                        Text("视角\n预设").font(.caption).multilineTextAlignment(.center)
                         cameraRecordPoint()
                     }
                     Spacer()

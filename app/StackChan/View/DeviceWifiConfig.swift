@@ -34,7 +34,7 @@ struct SelectBlufiDevice : View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                Section(header: Text("StackChan Device List").textCase(nil)) {
+                Section(header: Text("StackChan 设备列表").textCase(nil)) {
                     ForEach(appState.blufDeviceList, id: \.peripheral.identifier.uuidString) { blufiDeviceInfo in
                         Button {
                             if let mac = getDeviceId(blufiInfo: blufiDeviceInfo) {
@@ -50,9 +50,9 @@ struct SelectBlufiDevice : View {
                                     .frame(width: 25, height: 25)
 
                                 VStack(alignment: .leading) {
-                                    Text("Name: " + (blufiDeviceInfo.peripheral.name ?? "StackChan"))
+                                    Text("名称：" + (blufiDeviceInfo.peripheral.name ?? "StackChan"))
                                     if let deviceId = getDeviceId(blufiInfo: blufiDeviceInfo) {
-                                        Text("Device ID: \(deviceId)")
+                                        Text("设备 ID：\(deviceId)")
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
                                     }
@@ -65,7 +65,7 @@ struct SelectBlufiDevice : View {
                     }
                 }
             }
-            .navigationTitle("Select Device")
+            .navigationTitle("选择设备")
             .listStyle(.insetGrouped)
             .background(Color(UIColor.systemGroupedBackground))
             .toolbar {
@@ -74,7 +74,7 @@ struct SelectBlufiDevice : View {
                         appState.manualShutdownTime = Date()
                         appState.showDeviceWifiSet = false
                     } label: {
-                        Label("Cancel", systemImage: "xmark")
+                        Label("取消", systemImage: "xmark")
                     }
                 }
             }
@@ -122,20 +122,20 @@ struct DeviceWifiConfig : View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
-    @State private var title: String = "StackChan Wifi Setting"
+    @State private var title: String = "StackChan Wi-Fi 设置"
     
     var body: some View {
         List {
-            Section(header: Text("Name")) {
-                TextField("Please enter the name of the wifi", text:$wifiName)
+            Section(header: Text("Wi-Fi 名称")) {
+                TextField("请输入 Wi-Fi 名称", text:$wifiName)
                     .focused($focusedField, equals: .Name)
                     .submitLabel(.next)
                     .onSubmit {
                         focusedField = .Password
                     }
             }
-            Section(header: Text("Password")) {
-                TextField("Please enter the password of the wifi", text:$wifiPassword)
+            Section(header: Text("Wi-Fi 密码")) {
+                TextField("请输入 Wi-Fi 密码", text:$wifiPassword)
                     .focused($focusedField, equals: .Password)
                     .submitLabel(.done)
                     .onSubmit {
@@ -150,7 +150,7 @@ struct DeviceWifiConfig : View {
                 Button {
                     confirmWifi()
                 } label: {
-                    Label("Submit", systemImage: "checkmark")
+                    Label("提交", systemImage: "checkmark")
                 }
             }
             ToolbarItem(placement: .cancellationAction) {
@@ -158,12 +158,12 @@ struct DeviceWifiConfig : View {
                     appState.showDeviceWifiSet = false
                     BlufiUtil.shared.disconnectCurrentPeripheral()
                 } label: {
-                    Label("Cancel", systemImage: "xmark")
+                    Label("取消", systemImage: "xmark")
                 }
             }
         }
         .alert(alertMessage, isPresented: $showAlert, actions: {
-            Button("Confirm") {
+            Button("确定") {
                 alertMessage = ""
                 showAlert = false
             }
@@ -178,18 +178,18 @@ struct DeviceWifiConfig : View {
                 if let model = BlufiModel<BlufiNotifyState>.fromJson(json), let state = model.data?.state {
                     if state == "wifiConnecting" {
                         // Configuring Wi-Fi
-                        title = "In the configuration..."
+                        title = "正在配置..."
                     } else if state == "wifiConnected" {
                         // Configuration succeeded
-                        title = "Configuration successful"
+                        title = "配置成功"
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             appState.showDeviceWifiSet = false
                         }
                     } else if state == "wifiConnectFailed" {
                         // Configuration failed
-                        title = "Configuration failed"
+                        title = "配置失败"
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            alertMessage = "Configuration failed, please re-enter wifi name and password"
+                            alertMessage = "配置失败，请重新输入 Wi-Fi 名称和密码"
                             showAlert = true
                             focusedField = .Password
                         }
@@ -218,7 +218,7 @@ struct DeviceWifiConfig : View {
     
     private func confirmWifi() {
         if wifiName.isEmpty || wifiPassword.isEmpty {
-            alertMessage = "Please enter the full name and password"
+            alertMessage = "请输入完整的 Wi-Fi 名称和密码"
             showAlert = true
             return
         }

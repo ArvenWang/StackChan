@@ -119,12 +119,7 @@ public:
         struct tm local_tm;
         localtime_r(&now_t, &local_tm);
 
-        int hour12 = local_tm.tm_hour % 12;
-        if (hour12 == 0) {
-            hour12 = 12;
-        }
-
-        _label->setText(fmt::format("{}:{:02d} {}", hour12, local_tm.tm_min, local_tm.tm_hour >= 12 ? "PM" : "AM"));
+        _label->setText(fmt::format("{:02d}:{:02d}", local_tm.tm_hour, local_tm.tm_min));
     }
 
 private:

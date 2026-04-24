@@ -14,6 +14,8 @@
 
 namespace view {
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 class EspnowRoleSelectorPage {
 public:
     EspnowRoleSelectorPage()
@@ -28,8 +30,8 @@ public:
         _panel->setBorderWidth(0);
 
         _title = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
-        _title->setText("Select Role:");
-        _title->setTextFont(&lv_font_montserrat_24);
+        _title->setText("选择角色：");
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x154311));
         _title->align(LV_ALIGN_TOP_MID, 0, 12);
 
@@ -40,8 +42,8 @@ public:
         _btn_receiver->setBgColor(lv_color_hex(0xA0D99C));
         _btn_receiver->setBorderWidth(0);
         _btn_receiver->setShadowWidth(0);
-        _btn_receiver->label().setText("Receiver");
-        _btn_receiver->label().setTextFont(&lv_font_montserrat_24);
+        _btn_receiver->label().setText("接收端");
+        _btn_receiver->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_receiver->label().setTextColor(lv_color_hex(0x154311));
         _btn_receiver->onClick().connect([this]() { _selected_index = 0; });
 
@@ -52,8 +54,8 @@ public:
         _btn_sender->setBgColor(lv_color_hex(0xA0D99C));
         _btn_sender->setBorderWidth(0);
         _btn_sender->setShadowWidth(0);
-        _btn_sender->label().setText("Sender");
-        _btn_sender->label().setTextFont(&lv_font_montserrat_24);
+        _btn_sender->label().setText("发送端");
+        _btn_sender->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_sender->label().setTextColor(lv_color_hex(0x154311));
         _btn_sender->onClick().connect([this]() { _selected_index = 1; });
 
@@ -64,8 +66,8 @@ public:
         _btn_advanced->setBgColor(lv_color_hex(0xB9E6B4));
         _btn_advanced->setBorderWidth(0);
         _btn_advanced->setShadowWidth(0);
-        _btn_advanced->label().setText("Advanced");
-        _btn_advanced->label().setTextFont(&lv_font_montserrat_16);
+        _btn_advanced->label().setText("高级设置");
+        _btn_advanced->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_advanced->label().setTextColor(lv_color_hex(0x5F8559));
         _btn_advanced->onClick().connect([this]() { _selected_index = 2; });
     }

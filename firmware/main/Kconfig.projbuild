@@ -673,7 +673,7 @@ config USE_MULTILINE_CHAT_MESSAGE
 
 choice WAKE_WORD_TYPE
     prompt "Wake Word Implementation Type"
-    default USE_AFE_WAKE_WORD if (IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4) && SPIRAM
+    default USE_CUSTOM_WAKE_WORD if (IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4) && SPIRAM
     default WAKE_WORD_DISABLED
     help
         Choose the type of wake word implementation to use
@@ -705,14 +705,14 @@ endchoice
 
 config CUSTOM_WAKE_WORD
     string "Custom Wake Word"
-    default "xiao tu dou"
+    default "hey aida"
     depends on USE_CUSTOM_WAKE_WORD
     help
         Custom Wake Word, use pinyin for Chinese, separated by spaces
 
 config CUSTOM_WAKE_WORD_DISPLAY
     string "Custom Wake Word Display"
-    default "小土豆"
+    default "Hey Aida"
     depends on USE_CUSTOM_WAKE_WORD
     help
         Greeting sent to the server after wake word detection
@@ -907,6 +907,45 @@ menu "TAIJIPAI_S3_CONFIG"
     default y
     help
         启动双声道
+endmenu
+
+menu "Aida Bridge"
+    depends on BOARD_TYPE_M5STACK_STACK_CHAN
+
+    config AIDA_NOTIFY_SERVER_ENABLED
+        bool "Enable local Aida notification server"
+        default y
+        help
+            Start a local HTTP notification endpoint in AI.AGENT/xiaozhi mode so the Mac bridge can
+            push reliable completion updates without depending on AVATAR or cloud sessions.
+
+    config AIDA_NOTIFY_SERVER_PORT
+        int "Aida notification server port"
+        depends on AIDA_NOTIFY_SERVER_ENABLED
+        range 1 65535
+        default 7830
+        help
+            Local HTTP port on the robot for completion notifications from the Mac bridge.
+
+    config AIDA_NOTIFY_SERVER_TOKEN
+        string "Aida notification server bearer token"
+        depends on AIDA_NOTIFY_SERVER_ENABLED
+        default ""
+        help
+            Optional bearer token required by the robot's local notification endpoint.
+
+    config AIDA_BRIDGE_BASE_URL
+        string "Aida bridge base URL"
+        default ""
+        help
+            Base URL for the Mac bridge used by desktop Codex tools, for example:
+            http://your-mac.local:7826
+
+    config AIDA_BRIDGE_AUTH_TOKEN
+        string "Aida bridge bearer token"
+        default ""
+        help
+            Optional bearer token used when the robot calls the Mac bridge.
 endmenu
 
 endmenu

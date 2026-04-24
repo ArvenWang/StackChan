@@ -11,6 +11,8 @@
 
 namespace view {
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 class LoadingPage {
 public:
     LoadingPage(uint32_t bgColor = 0x000000, uint32_t textColor = 0xFFFFFF)
@@ -23,7 +25,7 @@ public:
         _panel->setRadius(0);
 
         _msg = std::make_unique<uitk::lvgl_cpp::Label>(_panel->get());
-        _msg->setTextFont(&lv_font_montserrat_20);
+        _msg->setTextFont(&BUILTIN_TEXT_FONT);
         _msg->setTextColor(lv_color_hex(textColor));
         _msg->setTextAlign(LV_TEXT_ALIGN_CENTER);
         _msg->align(LV_ALIGN_CENTER, 0, 0);

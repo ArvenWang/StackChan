@@ -32,7 +32,7 @@ struct BindingDevice : View {
                         Spacer()
                     }
                     
-                    Text("Get your StackChan device ready")
+                    Text("先准备好你的 StackChan")
                         .font(.title2)
                         .bold()
                     
@@ -40,17 +40,17 @@ struct BindingDevice : View {
                         HStack(alignment: .top) {
                             Image(systemName: "1.circle.fill")
                                 .foregroundColor(.accentColor)
-                            Text("Turn on your StackChan device")
+                            Text("打开你的 StackChan 设备")
                         }
                         HStack(alignment: .top) {
                             Image(systemName: "2.circle.fill")
                                 .foregroundColor(.accentColor)
-                            Text("After turning on the computer, turn the page to \"Setup\" and click to enter. A QR code will be displayed")
+                            Text("开机后切到机器人上的“设置”页并进入配网页面，屏幕上会显示二维码")
                         }
                         HStack(alignment: .top) {
                             Image(systemName: "3.circle.fill")
                                 .foregroundColor(.accentColor)
-                            Text("Align the QR code and scan it to bind the device")
+                            Text("对准二维码扫描，即可绑定设备")
                         }
                     }
                     .font(.body)
@@ -58,14 +58,14 @@ struct BindingDevice : View {
                 .padding()
                 Spacer()
                 NavigationLink(value: BindingDevicePageType.scanningEquipment) {
-                    Text("Next")
+                    Text("下一步")
                         .frame(maxWidth: .infinity)
                 }
                 .padding()
                 .controlSize(.large)
                 .buttonStyle(.borderedProminent)
             }
-            .navigationTitle("Binding Device")
+            .navigationTitle("绑定设备")
             .navigationDestination(for: BindingDevicePageType.self) { PageType in
                 switch PageType {
                 case .scanningEquipment:
@@ -128,30 +128,30 @@ struct ScanningEquipment : View {
                     )
                 }
                 .padding()
-                .navigationTitle("Scan Device QR Code")
+                .navigationTitle("扫描设备二维码")
             case .ConnectBlue:
                 VStack {
                     ProgressView()
                         .progressViewStyle(.circular)
-                    Text("Connecting to Bluetooth")
+                    Text("正在连接蓝牙")
                         .font(.title3)
                         .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .center)
-                .navigationTitle("Pairing devices")
+                .navigationTitle("配对设备")
             case .InputWiFi:
                 VStack {
                     List {
-                        Section(header: Text("Name")) {
-                            TextField("Please enter the name of the wifi", text:$wifiName)
+                        Section(header: Text("Wi-Fi 名称")) {
+                            TextField("请输入 Wi-Fi 名称", text:$wifiName)
                                 .focused($focusedField, equals: .Name)
                                 .submitLabel(.next)
                                 .onSubmit {
                                     focusedField = .Password
                                 }
                         }
-                        Section(header: Text("Password")) {
-                            TextField("Please enter the password of the wifi", text:$wifiPassword)
+                        Section(header: Text("Wi-Fi 密码")) {
+                            TextField("请输入 Wi-Fi 密码", text:$wifiPassword)
                                 .focused($focusedField, equals: .Password)
                                 .submitLabel(.done)
                                 .onSubmit {
@@ -167,7 +167,7 @@ struct ScanningEquipment : View {
                         focusedField = nil
                         confirmWifi()
                     } label: {
-                        Text("Confirm")
+                        Text("确定")
                             .frame(maxWidth: .infinity)
                     }
                     .padding()
@@ -175,22 +175,22 @@ struct ScanningEquipment : View {
                     .buttonStyle(.borderedProminent)
                 }
                 .background(Color(UIColor.systemGroupedBackground))
-                .navigationTitle("Enter Wifi Information")
+                .navigationTitle("输入 Wi-Fi 信息")
             case .DistributionNetwork:
                 VStack {
                     ProgressView()
                         .progressViewStyle(.circular)
-                    Text("The network is being configured for the equipment")
+                    Text("正在为设备配置网络")
                         .font(.title3)
                         .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .center)
-                .navigationTitle("wait a moment")
+                .navigationTitle("请稍候")
             case .ChangeTheName:
                 VStack {
                     List {
-                        Section(header: Text("Name")) {
-                            TextField("Please enter the name of the stackChan", text:$stackChanName)
+                        Section(header: Text("设备名称")) {
+                            TextField("请输入 StackChan 名称", text:$stackChanName)
                                 .focused($focusedField, equals: .StackChanName)
                                 .submitLabel(.done)
                                 .onSubmit {
@@ -206,7 +206,7 @@ struct ScanningEquipment : View {
                         focusedField = nil
                         updataName()
                     } label: {
-                        Text("Confirm")
+                        Text("确定")
                             .frame(maxWidth: .infinity)
                     }
                     .padding()
@@ -214,7 +214,7 @@ struct ScanningEquipment : View {
                     .buttonStyle(.borderedProminent)
                 }
                 .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .center)
-                .navigationTitle("Give me a name")
+                .navigationTitle("给我起个名字")
             default:
                 EmptyView()
             }
@@ -223,7 +223,7 @@ struct ScanningEquipment : View {
             Button {
                 appState.alertAction?()
             } label: {
-                Text("Confirm")
+                Text("确定")
             }
         }
         .task {
@@ -281,13 +281,13 @@ struct ScanningEquipment : View {
     private func confirmWifi() {
         
         if !BlufiUtil.shared.blueSwitch {
-            appState.alertTitle = "Please turn on Bluetooth"
+            appState.alertTitle = "请先打开蓝牙"
             appState.showAlert = true
             return
         }
         
         if wifiName.isEmpty || wifiPassword.isEmpty {
-            appState.alertTitle = "Please enter Wi-Fi name and password"
+            appState.alertTitle = "请输入完整的 Wi-Fi 名称和密码"
             appState.showAlert = true
             return
         }

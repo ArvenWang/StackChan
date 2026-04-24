@@ -15,6 +15,8 @@ using namespace view;
 using namespace uitk;
 using namespace uitk::lvgl_cpp;
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 /* -------------------------------------------------------------------------- */
 /*                    Dynamic backgroud color handle class                    */
 /* -------------------------------------------------------------------------- */
@@ -191,7 +193,7 @@ public:
         // Create floating label
         _label = std::make_unique<Label>(parent);
         _label->setTextColor(lv_color_hex(0x000000));
-        _label->setTextFont(&MontserratSemiBold26);
+        _label->setTextFont(&BUILTIN_TEXT_FONT);
         _label->setAlign(LV_ALIGN_CENTER);
         _label->addFlag(LV_OBJ_FLAG_FLOATING);
         _label->setOpa(233);

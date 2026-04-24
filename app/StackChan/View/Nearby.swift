@@ -28,7 +28,7 @@ struct Nearby: View {
     @State private var displayMode: Int = 1  // 1 star map mode, 2 list mode
     
     private let tag = "Nearby"
-    @State private var callTitle: String = "Under request..."
+    @State private var callTitle: String = "呼叫中..."
     
     var body: some View {
         NavigationStack(path: $appState.nearbyPath) {
@@ -84,7 +84,7 @@ struct Nearby: View {
                                     // Show request popup animation
                                     
                                 } label: {
-                                    Label("Video Call", systemImage: "video.fill")
+                                    Label("视频通话", systemImage: "video.fill")
                                 }
                             } label: {
                                 let name = (device.device.name?.isEmpty == false) ? device.device.name! : "StackChan"
@@ -95,7 +95,7 @@ struct Nearby: View {
                         }
                     }
                     RippleDiffusion {
-                        AvatarView(name: appState.deviceInfo.name ?? "Me")
+                        AvatarView(name: appState.deviceInfo.name ?? "我")
                     }
                     ForEach(flyingTexts) { flying in
                         Text(flying.text)
@@ -132,10 +132,10 @@ struct Nearby: View {
                                         // Show request popup animation
                                         
                                     } label: {
-                                        Label("Video Call", systemImage: "video.fill")
+                                        Label("视频通话", systemImage: "video.fill")
                                     }
                                 } label: {
-                                    Text(device.device.name ?? "Unknown")
+                                    Text(device.device.name ?? "未知设备")
                                         .frame(maxWidth: .infinity)
                                         .padding(12)
                                         .glassEffectRegular(cornerRadius: 25)
@@ -156,14 +156,14 @@ struct Nearby: View {
                         }
                     } label: {
                         Label {
-                            Text("Display Mode")
+                            Text("显示模式")
                         } icon: {
                             Image(systemName: displayMode == 1 ? "circle.hexagonpath" : "list.bullet")
                         }
                     }
                 }
             }
-            .navigationTitle("Nearby")
+            .navigationTitle("附近")
             .navigationDestination(for: PageType.self) { PageType in
                 switch PageType {
                 case .cameraPage:
@@ -181,12 +181,12 @@ struct Nearby: View {
                     Spacer()
                     HStack(alignment:.center) {
                         Spacer()
-                        AvatarView(name: "Caller")
+                        AvatarView(name: "发起方")
                         Spacer()
                         ProgressView()
                             .scaleEffect(1.5)
                         Spacer()
-                        AvatarView(name: "Receiver")
+                        AvatarView(name: "接收方")
                         Spacer()
                     }
                     Spacer()
@@ -205,7 +205,7 @@ struct Nearby: View {
                                 .clipShape(Circle())
                                 .foregroundColor(.white)
                                 .shadow(color: Color.gray, radius: 10, x: 0, y: 0)
-                            Text("Hang up")
+                            Text("挂断")
                                 .frame(height: 15)
                                 .foregroundColor(Color(UIColor.label))
                         }
@@ -234,7 +234,7 @@ struct Nearby: View {
                                 }
                             case MsgType.refuseCall:
                                 // Refuse call
-                                callTitle = "The other party has refused."
+                                callTitle = "对方已拒绝。"
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                     showCallPopup = false
                                 }
@@ -312,11 +312,11 @@ struct Nearby: View {
         if msgType == .requestCall {
             deviceMac = device.device.mac
             showCallPopup = true
-            callTitle = "Under request..."
+            callTitle = "呼叫中..."
             // Automatically hang up after 20 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 20.0) {
                 if showCallPopup {
-                    callTitle = "No one answered."
+                    callTitle = "无人接听。"
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0,) {
                         showCallPopup = false
                         appState.sendWebSocketMessage(.hangupCall)

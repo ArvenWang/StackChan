@@ -62,7 +62,7 @@ struct Dance : View {
                             danceList.remove(at: index)
                             saveDance()
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label("删除", systemImage: "trash")
                         }
                     }
             }
@@ -86,7 +86,7 @@ struct Dance : View {
                     }
                 } label: {
                     Label {
-                        Text(isRun ? "Stop" : "Run")
+                        Text(isRun ? "停止" : "运行")
                     } icon: {
                         Image(systemName: isRun ? "stop.fill" : "play.fill")
                     }
@@ -102,9 +102,9 @@ struct Dance : View {
                         selectedDance = 0
                     } label: {
                         if selectedDance == 0 {
-                            Label("Dance One", systemImage: "checkmark")
+                            Label("舞蹈一", systemImage: "checkmark")
                         } else {
-                            Text("Dance One")
+                            Text("舞蹈一")
                         }
                     }
                     
@@ -112,9 +112,9 @@ struct Dance : View {
                         selectedDance = 1
                     } label: {
                         if selectedDance == 1 {
-                            Label("Dance Two", systemImage: "checkmark")
+                            Label("舞蹈二", systemImage: "checkmark")
                         } else {
-                            Text("Dance Two")
+                            Text("舞蹈二")
                         }
                     }
                     
@@ -122,14 +122,14 @@ struct Dance : View {
                         selectedDance = 2
                     } label: {
                         if selectedDance == 2 {
-                            Label("Dance Three", systemImage: "checkmark")
+                            Label("舞蹈三", systemImage: "checkmark")
                         } else {
-                            Text("Dance Three")
+                            Text("舞蹈三")
                         }
                     }
                 } label: {
                     Label {
-                        Text("Dance")
+                        Text("舞蹈组")
                     } icon: {
                         Image(systemName: "figure.dance")
                     }
@@ -148,7 +148,7 @@ struct Dance : View {
                     saveDance()
                 } label: {
                     Label {
-                        Text("Add Dance")
+                        Text("新增动作")
                     } icon: {
                         Image(systemName: "plus")
                     }
@@ -187,10 +187,10 @@ struct Dance : View {
     
     private func danceTitle() -> String {
         switch selectedDance {
-        case 0: return "Dance One"
-        case 1: return "Dance Two"
-        case 2: return "Dance Three"
-        default: return "Dance"
+        case 0: return "舞蹈一"
+        case 1: return "舞蹈二"
+        case 2: return "舞蹈三"
+        default: return "舞蹈"
         }
     }
     
@@ -220,11 +220,11 @@ struct Dance : View {
                     }
                     saveDance()
                 } label: {
-                    Label("Copy", systemImage: "doc.on.doc")
+                    Label("复制", systemImage: "doc.on.doc")
                 }
             }
             VStack(alignment: .leading) {
-                Text("Left-Right")
+                Text("左右")
                     .frame(width: 80,alignment: .leading)
                 HStack {
                     Slider(
@@ -245,7 +245,7 @@ struct Dance : View {
                     Text(String(danceList[index].yawServo.angle))
                         .frame(width: 50,alignment: .trailing)
                 }
-                Text("Up-down")
+                Text("上下")
                     .frame(width: 80,alignment: .leading)
                 HStack {
                     Slider(
@@ -266,7 +266,7 @@ struct Dance : View {
                     Text(String(danceList[index].pitchServo.angle))
                         .frame(width: 50,alignment: .trailing)
                 }
-                Text("Duration")
+                Text("时长")
                     .frame(width: 80,alignment: .leading)
                 HStack {
                     Slider(
@@ -360,8 +360,8 @@ struct AddAvatarMotion : View {
     let onCallBack : ((DanceData) -> Void)?
     
     enum ControlItem: String,CaseIterable, Identifiable {
-        case avatar = "Avatar"
-        case motion = "Motion"
+        case avatar = "表情"
+        case motion = "动作"
         var id: String { rawValue }
     }
     
@@ -375,7 +375,7 @@ struct AddAvatarMotion : View {
                     Spacer()
                 }
                 HStack {
-                    Text("duration")
+                    Text("时长")
                         .frame(width: 100,alignment: .leading)
                     Slider(
                         value: Binding(
@@ -389,7 +389,7 @@ struct AddAvatarMotion : View {
                         .frame(width: 50,alignment: .trailing)
                 }
                 HStack {
-                    Picker("Select", selection: $selectedItem) {
+                    Picker("选择", selection: $selectedItem) {
                         ForEach(ControlItem.allCases) { item in
                             Text(item.rawValue)
                                 .tag(item)
@@ -409,7 +409,7 @@ struct AddAvatarMotion : View {
                 
                 if selectedItem == .avatar {
                     List {
-                        Section("Left Eye") {
+                        Section("左眼") {
                             HStack {
                                 Text("x")
                                     .frame(width: 60,alignment: .leading)
@@ -449,7 +449,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("rotation")
+                                Text("旋转")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -468,7 +468,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("weight")
+                                Text("粗细")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -487,7 +487,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("size")
+                                Text("大小")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -508,7 +508,7 @@ struct AddAvatarMotion : View {
                         }
                         .listRowBackground(Color.clear)
                         
-                        Section("Right Eye") {
+                        Section("右眼") {
                             HStack {
                                 Text("x")
                                     .frame(width: 60,alignment: .leading)
@@ -548,7 +548,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("rotation")
+                                Text("旋转")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -567,7 +567,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("weight")
+                                Text("粗细")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -586,7 +586,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("size")
+                                Text("大小")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -607,7 +607,7 @@ struct AddAvatarMotion : View {
                         }
                         .listRowBackground(Color.clear)
                         
-                        Section("Mouth") {
+                        Section("嘴巴") {
                             HStack {
                                 Text("x")
                                     .frame(width: 60,alignment: .leading)
@@ -647,7 +647,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("rotation")
+                                Text("旋转")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -666,7 +666,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("weight")
+                                Text("粗细")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -692,9 +692,9 @@ struct AddAvatarMotion : View {
                     .background(.clear)
                 } else if selectedItem == .motion {
                     List {
-                        Section("Yaw Servo") {
+                        Section("水平舵机") {
                             HStack {
-                                Text("angle")
+                                Text("角度")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -715,7 +715,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("speed")
+                                Text("速度")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -735,9 +735,9 @@ struct AddAvatarMotion : View {
                             }
                         }
                         .listRowBackground(Color.clear)
-                        Section("Pitch Servo") {
+                        Section("俯仰舵机") {
                             HStack {
-                                Text("angle")
+                                Text("角度")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -756,7 +756,7 @@ struct AddAvatarMotion : View {
                                     .frame(width: 50,alignment: .trailing)
                             }
                             HStack {
-                                Text("speed")
+                                Text("速度")
                                     .frame(width: 60,alignment: .leading)
                                 Slider(
                                     value: Binding(
@@ -785,7 +785,7 @@ struct AddAvatarMotion : View {
             }
             .padding()
             .ignoresSafeArea(edges: .bottom)
-            .navigationTitle(editDanceDataIndex == nil ? "Add Dance" : "Edit Dance")
+            .navigationTitle(editDanceDataIndex == nil ? "新增动作" : "编辑动作")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar{
                 ToolbarItem(placement: .confirmationAction) {

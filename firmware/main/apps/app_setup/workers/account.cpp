@@ -12,6 +12,7 @@ using namespace uitk::lvgl_cpp;
 using namespace setup_workers;
 
 static std::string _tag = "Setup-Account";
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
 
 AccountWorker::PanelInfo::PanelInfo(lv_obj_t* parent, int posY, std::string_view title, std::string_view info)
 {
@@ -25,13 +26,13 @@ AccountWorker::PanelInfo::PanelInfo(lv_obj_t* parent, int posY, std::string_view
     _panel->removeFlag(LV_OBJ_FLAG_SCROLLABLE);
 
     _label_title = std::make_unique<Label>(_panel->get());
-    _label_title->setTextFont(&lv_font_montserrat_20);
+    _label_title->setTextFont(&BUILTIN_TEXT_FONT);
     _label_title->setTextColor(lv_color_hex(0x445B80));
     _label_title->align(LV_ALIGN_TOP_MID, 0, 13);
     _label_title->setText(title);
 
     _label_info = std::make_unique<Label>(_panel->get());
-    _label_info->setTextFont(&lv_font_montserrat_20);
+    _label_info->setTextFont(&BUILTIN_TEXT_FONT);
     _label_info->setTextColor(lv_color_hex(0x07162C));
     _label_info->align(LV_ALIGN_CENTER, 0, 14);
     _label_info->setWidth(270);
@@ -51,13 +52,13 @@ AccountWorker::PageAccount::PageAccount(std::string_view username, std::string_v
 
     // Title
     _label_title = std::make_unique<Label>(_panel->get());
-    _label_title->setTextFont(&lv_font_montserrat_20);
+    _label_title->setTextFont(&BUILTIN_TEXT_FONT);
     _label_title->setTextColor(lv_color_hex(0x7E7B9C));
     _label_title->align(LV_ALIGN_TOP_MID, 0, 12);
-    _label_title->setText("ACCOUNT");
+    _label_title->setText("账号");
 
-    _panel_username    = std::make_unique<PanelInfo>(_panel->get(), 50, "M5Stack Account:", username);
-    _panel_device_name = std::make_unique<PanelInfo>(_panel->get(), 174, "Device Name:", deviceName);
+    _panel_username    = std::make_unique<PanelInfo>(_panel->get(), 50, "M5Stack 账号：", username);
+    _panel_device_name = std::make_unique<PanelInfo>(_panel->get(), 174, "设备名称：", deviceName);
 
     // Button
     _btn_unbind = std::make_unique<Button>(_panel->get());
@@ -65,8 +66,8 @@ AccountWorker::PageAccount::PageAccount(std::string_view username, std::string_v
     _btn_unbind->align(LV_ALIGN_TOP_MID, 0, 303);
     _btn_unbind->setSize(290, 48);
     _btn_unbind->setBgColor(lv_color_hex(0xFF8080));
-    _btn_unbind->label().setText("Unbind and factory reset");
-    _btn_unbind->label().setTextFont(&lv_font_montserrat_20);
+    _btn_unbind->label().setText("解绑并恢复出厂");
+    _btn_unbind->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_unbind->label().setTextColor(lv_color_hex(0x731F1F));
     _btn_unbind->onClick().connect([this]() { _is_unbind_clicked = true; });
 
@@ -74,8 +75,8 @@ AccountWorker::PageAccount::PageAccount(std::string_view username, std::string_v
     apply_button_common_style(*_btn_quit);
     _btn_quit->align(LV_ALIGN_TOP_MID, 0, 371);
     _btn_quit->setSize(290, 48);
-    _btn_quit->label().setText("Back");
-    _btn_quit->label().setTextFont(&lv_font_montserrat_20);
+    _btn_quit->label().setText("返回");
+    _btn_quit->label().setTextFont(&BUILTIN_TEXT_FONT);
     _btn_quit->onClick().connect([this]() { _is_quit_clicked = true; });
 }
 

@@ -18,7 +18,7 @@ struct Settings : View {
     var body: some View {
         NavigationStack(path: $appState.settingsPath) {
             List {
-                Section("conventional") {
+                Section("常用") {
                     Button {
                         if appState.deviceMac.isEmpty {
                             appState.showBindingDeviceAlert = true
@@ -32,7 +32,7 @@ struct Settings : View {
                                 .frame(width: 28, height: 28)
                                 .background(Color.blue)
                                 .cornerRadius(8)
-                            Text("Change Name")
+                            Text("修改名称")
                             Spacer()
                             Text(appState.deviceInfo.name ?? "")
                                 .foregroundStyle(.secondary)
@@ -49,7 +49,7 @@ struct Settings : View {
                                 .frame(width: 28, height: 28)
                                 .background(Color.green)
                                 .cornerRadius(8)
-                            Text("Online upgrade")
+                            Text("在线升级")
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(.secondary)
@@ -58,7 +58,7 @@ struct Settings : View {
                     .foregroundStyle(.primary)
                 }
                 
-                Section("system") {
+                Section("系统") {
                     Button {
                     } label: {
                         HStack {
@@ -67,7 +67,7 @@ struct Settings : View {
                                 .frame(width: 28, height: 28)
                                 .background(Color.red)
                                 .cornerRadius(8)
-                            Text("Factory data reset")
+                            Text("恢复出厂数据")
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(.secondary)
@@ -83,7 +83,7 @@ struct Settings : View {
                                 .frame(width: 28, height: 28)
                                 .background(Color.blue)
                                 .cornerRadius(8)
-                            Text("Bind StachChan")
+                            Text("绑定 StackChan")
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(.secondary)
@@ -93,7 +93,7 @@ struct Settings : View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Settings")
+            .navigationTitle("设置")
             .navigationDestination(for: PageType.self) { PageType in
                 switch PageType {
                 case .cameraPage:

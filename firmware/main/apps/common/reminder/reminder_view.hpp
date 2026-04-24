@@ -14,6 +14,8 @@
 #include <string_view>
 #include <memory>
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 namespace view {
 
 class ReminderView : public stackchan::avatar::Decorator {
@@ -43,8 +45,8 @@ public:
 
         _title = std::make_unique<uitk::lvgl_cpp::Label>(_msg_panel->get());
         _title->align(LV_ALIGN_CENTER, -59, -59);
-        _title->setText("Reminder:");
-        _title->setTextFont(&lv_font_montserrat_16);
+        _title->setText("通知");
+        _title->setTextFont(&BUILTIN_TEXT_FONT);
         _title->setTextColor(lv_color_hex(0x897039));
 
         _msg = std::make_unique<uitk::lvgl_cpp::Label>(_msg_panel->get());
@@ -52,7 +54,7 @@ public:
         _msg->setText(message);
         _msg->setWidth(256);
         _msg->setTextAlign(LV_TEXT_ALIGN_CENTER);
-        _msg->setTextFont(&lv_font_montserrat_24);
+        _msg->setTextFont(&BUILTIN_TEXT_FONT);
         _msg->setTextColor(lv_color_hex(0x47330A));
 
         _btn_ok = std::make_unique<uitk::lvgl_cpp::Button>(_panel->get());
@@ -62,9 +64,9 @@ public:
         _btn_ok->setShadowWidth(0);
         _btn_ok->setRadius(18);
         _btn_ok->setSize(296, 48);
-        _btn_ok->label().setTextFont(&lv_font_montserrat_20);
+        _btn_ok->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_ok->label().setTextColor(lv_color_hex(0x26206A));
-        _btn_ok->label().setText("OK");
+        _btn_ok->label().setText("知道了");
         _btn_ok->onClick().connect([this]() { requestDestroy(); });
     }
 

@@ -306,6 +306,7 @@ idf_component_register(SRCS ${SOURCES}
                         esp_driver_ppa
                         esp_app_format
                         app_update
+                        esp_http_server
                         spi_flash
                         console
                         efuse

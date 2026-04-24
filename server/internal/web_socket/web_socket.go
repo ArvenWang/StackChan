@@ -519,19 +519,19 @@ func readAppClientMessage(ctx context.Context, client *AppClient, messageType *i
 			break
 		case GetDeviceName:
 			// Query device name
-			name, err := service.GetDeviceName(ctx, client.Mac)
-			if err != nil {
-				logger.Errorf(ctx, err.Error())
-				return
-			}
+				name, err := service.GetDeviceName(ctx, client.Mac)
+				if err != nil {
+					logger.Errorf(ctx, "%s", err.Error())
+					return
+				}
 			if name == "" {
 				logger.Infof(ctx, "Queried device nickname is empty")
 				return
-			}
-			newMsg := createStringMessage(GetDeviceName, name)
-			logger.Infof(ctx, "Device name found, returning: "+name)
-			forwardMessage(ctx, client.Conn, messageType, newMsg, client.mu)
-			break
+				}
+				newMsg := createStringMessage(GetDeviceName, name)
+				logger.Infof(ctx, "Device name found, returning: %s", name)
+				forwardMessage(ctx, client.Conn, messageType, newMsg, client.mu)
+				break
 		case UpdateDeviceName:
 			stackChanClient := getStackChanClient(client.Mac)
 			if stackChanClient != nil {

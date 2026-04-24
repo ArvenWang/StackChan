@@ -17,7 +17,7 @@ using namespace stackchan;
 AppDance::AppDance()
 {
     // 配置 App 名
-    setAppInfo().name = "DANCE";
+    setAppInfo().name = "舞蹈";
     // 配置 App 图标
     static auto icon  = assets::get_image("icon_dance.bin");
     setAppInfo().icon = (void*)&icon;
@@ -41,7 +41,7 @@ void AppDance::onOpen()
     {
         LvglLockGuard lock;
         loading_page = std::make_unique<view::LoadingPage>(0xB77BFF, 0x422268);
-        loading_page->setMessage("Starting\n BLE server...");
+        loading_page->setMessage("正在启动\n蓝牙服务...");
     }
 
     // Start BLE service

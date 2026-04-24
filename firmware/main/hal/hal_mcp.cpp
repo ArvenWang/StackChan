@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 #include "hal.h"
+#include "hal_aida.h"
 #include <mooncake_log.h>
 #include <mcp_server.h>
 #include <stackchan/stackchan.h>
@@ -145,5 +146,46 @@ void Hal::xiaozhi_mcp_init()
                            mclog::tagInfo(_tag, "stop_reminder: id={}", id);
                            tools::stop_reminder(id);
                            return true;
+                       });
+
+    mclog::tagInfo(_tag, "add desktop.codex_run tool");
+    mcp_server.AddTool(
+        "self.desktop.codex_run",
+        "Run a Codex task on the paired Mac bridge. Use this when the user wants you to inspect code, modify files, "
+        "or do coding work on the computer. If workspace is unknown, leave it empty so the bridge can use its "
+        "default workspace.",
+        PropertyList({Property("prompt", kPropertyTypeString, std::string()),
+                      Property("workspace", kPropertyTypeString, std::string()),
+                      Property("title", kPropertyTypeString, std::string("Codex task")),
+                      Property("notify", kPropertyTypeBoolean, true)}),
+        [](const PropertyList& properties) -> ReturnValue {
+            auto prompt = properties["prompt"].value<std::string>();
+            auto workspace = properties["workspace"].value<std::string>();
+            auto title = properties["title"].value<std::string>();
+            auto notify = properties["notify"].value<bool>();
+
+            if (prompt.empty()) {
+                throw std::runtime_error("prompt is required");
+            }
+
+            return aida::createCodexTask(prompt, workspace, title, notify);
+        });
+
+    mclog::tagInfo(_tag, "add desktop.codex_status tool");
+    mcp_server.AddTool("self.desktop.codex_status",
+                       "Get the latest status for a Codex desktop task by task_id.",
+                       PropertyList({Property("task_id", kPropertyTypeString, std::string())}),
+                       [](const PropertyList& properties) -> ReturnValue {
+                           auto task_id = properties["task_id"].value<std::string>();
+                           return aida::getCodexTask(task_id);
+                       });
+
+    mclog::tagInfo(_tag, "add desktop.codex_cancel tool");
+    mcp_server.AddTool("self.desktop.codex_cancel",
+                       "Cancel a running Codex desktop task by task_id.",
+                       PropertyList({Property("task_id", kPropertyTypeString, std::string())}),
+                       [](const PropertyList& properties) -> ReturnValue {
+                           auto task_id = properties["task_id"].value<std::string>();
+                           return aida::cancelCodexTask(task_id);
                        });
 }

@@ -14,6 +14,8 @@
 
 namespace view {
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 class PageSelector {
 public:
     PageSelector(std::string_view label, const std::vector<std::string> options)
@@ -28,7 +30,7 @@ public:
 
         _label = std::make_unique<uitk::lvgl_cpp::Label>(_panel->get());
         _label->setText(label);
-        _label->setTextFont(&lv_font_montserrat_24);
+        _label->setTextFont(&BUILTIN_TEXT_FONT);
         _label->setTextColor(lv_color_hex(0x26206A));
         _label->align(LV_ALIGN_CENTER, 0, -80);
 
@@ -37,7 +39,7 @@ public:
         _roller->setOptions(options);
         _roller->align(LV_ALIGN_CENTER, -45, 35);
         _roller->onValueChanged().connect([&](uint32_t index) { _selected_index = index; });
-        _roller->setTextFont(&lv_font_montserrat_24);
+        _roller->setTextFont(&BUILTIN_TEXT_FONT);
         _roller->setTextColor(lv_color_hex(0x26206A));
         _roller->setBgColor(lv_color_hex(0xDDEAFF));
         _roller->setRadius(18);
@@ -45,8 +47,8 @@ public:
         _roller->setBorderWidth(0);
 
         _btn_confirm = std::make_unique<uitk::lvgl_cpp::Button>(_panel->get());
-        _btn_confirm->label().setText("ok");
-        _btn_confirm->label().setTextFont(&lv_font_montserrat_24);
+        _btn_confirm->label().setText("确定");
+        _btn_confirm->label().setTextFont(&BUILTIN_TEXT_FONT);
         _btn_confirm->setSize(70, 110);
         _btn_confirm->align(LV_ALIGN_CENTER, 110, 40);
         _btn_confirm->onClick().connect([&]() { _is_selected = true; });

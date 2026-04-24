@@ -21,8 +21,8 @@ struct AvatarMotionControl : View {
     @State private var lastJoystickUpdate: Date = .distantPast
     
     enum ControlItem: String,CaseIterable, Identifiable {
-        case avatar = "Avatar"
-        case motion = "Motion"
+        case avatar = "表情"
+        case motion = "动作"
         var id: String { rawValue }
     }
     
@@ -36,7 +36,7 @@ struct AvatarMotionControl : View {
                 Spacer()
             }
             HStack {
-                Picker("Select", selection: $selectedItem) {
+                Picker("选择", selection: $selectedItem) {
                     ForEach(ControlItem.allCases) { item in
                         Text(item.rawValue)
                             .tag(item)
@@ -63,7 +63,7 @@ struct AvatarMotionControl : View {
             
             if selectedItem == .avatar {
                 List {
-                    Section("Left Eye") {
+                    Section("左眼") {
                         HStack {
                             Text("x")
                                 .frame(width: 60,alignment: .leading)
@@ -103,7 +103,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("rotation")
+                            Text("旋转")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -122,7 +122,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("weight")
+                            Text("粗细")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -141,7 +141,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("size")
+                            Text("大小")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -162,7 +162,7 @@ struct AvatarMotionControl : View {
                     }
                     .listRowBackground(Color.clear)
                     
-                    Section("Right Eye") {
+                    Section("右眼") {
                         HStack {
                             Text("x")
                                 .frame(width: 60,alignment: .leading)
@@ -202,7 +202,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("rotation")
+                            Text("旋转")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -221,7 +221,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("weight")
+                            Text("粗细")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -240,7 +240,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("size")
+                            Text("大小")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -261,7 +261,7 @@ struct AvatarMotionControl : View {
                     }
                     .listRowBackground(Color.clear)
                     
-                    Section("Mouth") {
+                    Section("嘴巴") {
                         HStack {
                             Text("x")
                                 .frame(width: 60,alignment: .leading)
@@ -301,7 +301,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("rotation")
+                            Text("旋转")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -320,7 +320,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("weight")
+                            Text("粗细")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -346,7 +346,7 @@ struct AvatarMotionControl : View {
                 .background(.clear)
             } else if selectedItem == .motion {
                 List {
-                    Section("Joystick") {
+                    Section("摇杆") {
                         HStack {
                             Spacer()
                             JoystickView { radians, strength in
@@ -365,9 +365,9 @@ struct AvatarMotionControl : View {
                         }
                     }
                     .listRowBackground(Color.clear)
-                    Section("Yaw Servo") {
+                    Section("水平舵机") {
                         HStack {
-                            Text("angle")
+                            Text("角度")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -389,7 +389,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("speed")
+                            Text("速度")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -408,7 +408,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("rotate")
+                            Text("旋转")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -431,9 +431,9 @@ struct AvatarMotionControl : View {
                         }
                     }
                     .listRowBackground(Color.clear)
-                    Section("Pitch Servo") {
+                    Section("俯仰舵机") {
                         HStack {
-                            Text("angle")
+                            Text("角度")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -452,7 +452,7 @@ struct AvatarMotionControl : View {
                                 .frame(width: 50,alignment: .trailing)
                         }
                         HStack {
-                            Text("speed")
+                            Text("速度")
                                 .frame(width: 60,alignment: .leading)
                             Slider(
                                 value: Binding(
@@ -559,4 +559,3 @@ struct AvatarMotionControl : View {
         }
     }
 }
-

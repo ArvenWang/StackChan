@@ -16,7 +16,7 @@ using namespace stackchan;
 AppEzdata::AppEzdata()
 {
     // 配置 App 名
-    setAppInfo().name = "EZDATA";
+    setAppInfo().name = "数据配对";
     // 配置 App 图标
     static auto icon  = assets::get_image("icon_ezdata.bin");
     setAppInfo().icon = (void*)&icon;

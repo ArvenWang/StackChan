@@ -8,6 +8,8 @@
 using namespace view;
 using namespace uitk::lvgl_cpp;
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 SelectMenuPage::SelectMenuPage(std::vector<MenuSection> sections) : _sections(std::move(sections))
 {
     _pannel = std::make_unique<uitk::lvgl_cpp::Container>(lv_screen_active());
@@ -57,7 +59,7 @@ void SelectMenuPage::create_selection_label(int x, int y, std::string_view text)
 {
     auto label = std::make_unique<uitk::lvgl_cpp::Label>(*_pannel);
     label->setText(text);
-    label->setTextFont(&lv_font_montserrat_16);
+    label->setTextFont(&BUILTIN_TEXT_FONT);
     label->setTextColor(lv_color_hex(0x6A6882));
     label->setPos(x, y);
     _labels.push_back(std::move(label));
@@ -74,7 +76,7 @@ void SelectMenuPage::create_item_button(int y, const MenuItem& item, int section
     btn->setRadius(18);
 
     btn->label().setText(item.label);
-    btn->label().setTextFont(&lv_font_montserrat_24);
+    btn->label().setTextFont(&BUILTIN_TEXT_FONT);
     btn->label().setTextColor(lv_color_hex(0x26206A));
     btn->label().align(LV_ALIGN_CENTER, 0, 0);
     btn->label().setWidth(256);

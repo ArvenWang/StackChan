@@ -15,19 +15,19 @@ struct ContentView: View {
         TabView {
             StackChan()
                 .tabItem {
-                    Label( "StackChan", systemImage: "ipod")
+                    Label("机器人", systemImage: "ipod")
                 }
             Nearby()
                 .tabItem {
-                    Label("Nearby", systemImage: "sensor")
+                    Label("附近", systemImage: "sensor")
                 }
             Moments()
                 .tabItem {
-                    Label("Moments", systemImage: "person.3")
+                    Label("动态", systemImage: "person.3")
                 }
             Settings()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Label("设置", systemImage: "gear")
                 }
         }
         .task {
@@ -45,12 +45,12 @@ struct ContentView: View {
                 .presentationDetents([.medium])
                 .interactiveDismissDisabled(true)
         }
-        .alert("Let's give the lovely StackChan a new name", isPresented: $appState.showCjamgeNameAlert, actions: {
-            TextField("Please enter the name", text: $appState.newName)
-            Button("Cancel", role: .cancel) {
+        .alert("给你的 StackChan 起个名字吧", isPresented: $appState.showCjamgeNameAlert, actions: {
+            TextField("请输入名称", text: $appState.newName)
+            Button("取消", role: .cancel) {
                 appState.showCjamgeNameAlert = false
             }
-            Button("Confirm") {
+            Button("确定") {
                 appState.showCjamgeNameAlert = false
                 withAnimation {
                     appState.deviceInfo.name = appState.newName
@@ -58,8 +58,8 @@ struct ContentView: View {
                 appState.updateDeviceInfo()
             }
         })
-        .alert("Please switch StackChan to the SETUP page, select \"App Bind Code\", and then switch to the settings page on the app to choose \"Bind Device\"", isPresented: $appState.showBindingDeviceAlert) {
-            Button("Confirm") {
+        .alert("请先把 StackChan 切到“设置”页面，在机器人上进入配网页，再回到 App 的“设置”里选择“绑定设备”。", isPresented: $appState.showBindingDeviceAlert) {
+            Button("确定") {
                 appState.showBindingDeviceAlert = false
             }
         }

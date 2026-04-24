@@ -269,6 +269,28 @@ void StackChanAvatarDisplay::SetupUI()
     lv_obj_align(preview_image_, LV_ALIGN_CENTER, 0, 0);
     lv_obj_add_flag(preview_image_, LV_OBJ_FLAG_HIDDEN);
 
+    auto lvgl_theme = static_cast<LvglTheme*>(current_theme_);
+    auto text_font = lvgl_theme->text_font()->font();
+
+    status_label_ = lv_label_create(lv_screen_active());
+    lv_obj_set_width(status_label_, 280);
+    lv_obj_set_style_text_align(status_label_, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_set_style_text_color(status_label_, lvgl_theme->text_color(), 0);
+    lv_obj_set_style_text_font(status_label_, text_font, 0);
+    lv_label_set_text(status_label_, "");
+    lv_obj_align(status_label_, LV_ALIGN_TOP_MID, 0, 10);
+    lv_obj_add_flag(status_label_, LV_OBJ_FLAG_HIDDEN);
+
+    notification_label_ = lv_label_create(lv_screen_active());
+    lv_obj_set_width(notification_label_, 280);
+    lv_obj_set_style_text_align(notification_label_, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_set_style_text_color(notification_label_, lvgl_theme->text_color(), 0);
+    lv_obj_set_style_text_font(notification_label_, text_font, 0);
+    lv_label_set_long_mode(notification_label_, LV_LABEL_LONG_WRAP);
+    lv_label_set_text(notification_label_, "");
+    lv_obj_align(notification_label_, LV_ALIGN_TOP_MID, 0, 10);
+    lv_obj_add_flag(notification_label_, LV_OBJ_FLAG_HIDDEN);
+
     // GetHAL().startStackChanAutoUpdate(24);
 
     ESP_LOGI(TAG, "Avatar created and started");
@@ -527,4 +549,5 @@ void StackChanAvatarDisplay::SetStatus(const char* status)
 
 void StackChanAvatarDisplay::ShowNotification(const char* notification, int duration_ms)
 {
+    LvglDisplay::ShowNotification(notification, duration_ms);
 }

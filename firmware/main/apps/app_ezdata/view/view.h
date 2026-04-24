@@ -14,6 +14,8 @@
 
 namespace view {
 
+LV_FONT_DECLARE(BUILTIN_TEXT_FONT);
+
 /**
  * @brief
  *
@@ -47,26 +49,26 @@ public:
         _panel_pair_code->setRadius(18);
 
         _title_url = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
-        _title_url->setText("Ezdata Web client:");
-        _title_url->setTextFont(&lv_font_montserrat_16);
+        _title_url->setText("EzData 网页端：");
+        _title_url->setTextFont(&BUILTIN_TEXT_FONT);
         _title_url->setTextColor(lv_color_hex(0x0E2648));
         _title_url->align(LV_ALIGN_TOP_LEFT, 27, 16);
 
         _msg_url = std::make_unique<uitk::lvgl_cpp::Label>(*_panel_url);
         _msg_url->setText("https://my.m5stack.com/ezdata2");
-        _msg_url->setTextFont(&lv_font_montserrat_16);
+        _msg_url->setTextFont(&BUILTIN_TEXT_FONT);
         _msg_url->setTextColor(lv_color_hex(0x0E2648));
         _msg_url->align(LV_ALIGN_CENTER, 0, 0);
 
         _title_pair_code = std::make_unique<uitk::lvgl_cpp::Label>(*_panel);
-        _title_pair_code->setText("Pair Code:");
-        _title_pair_code->setTextFont(&lv_font_montserrat_16);
+        _title_pair_code->setText("配对码：");
+        _title_pair_code->setTextFont(&BUILTIN_TEXT_FONT);
         _title_pair_code->setTextColor(lv_color_hex(0x0E2648));
         _title_pair_code->align(LV_ALIGN_TOP_LEFT, 27, 113);
 
         _msg_pair_code = std::make_unique<uitk::lvgl_cpp::Label>(*_panel_pair_code);
         _msg_pair_code->setText(pairCode);
-        _msg_pair_code->setTextFont(&lv_font_montserrat_24);
+        _msg_pair_code->setTextFont(&BUILTIN_TEXT_FONT);
         _msg_pair_code->setTextColor(lv_color_hex(0x0E2648));
         _msg_pair_code->align(LV_ALIGN_CENTER, 0, 0);
     }
